@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="fish">
+    <output-path>$PROJECT_DIR$/out/artifacts/fish</output-path>
+    <root id="archive" name="fish.war">
+      <element id="dir-copy" path="$PROJECT_DIR$/web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="FishTankServer" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

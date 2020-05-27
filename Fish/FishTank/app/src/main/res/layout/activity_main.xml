@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fishtank.activity.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/temp_img2128" />
+        <TextView
+            android:id="@+id/tempValue"
+            android:layout_gravity="top"
+            android:gravity="top"
+            android:textSize="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0°C" />
+        </LinearLayout>
+
+<!--        <TextView-->
+<!--            android:id="@+id/tips"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:textSize="32dp"-->
+<!--            android:text="温馨提示" />-->
+        <TextView
+            android:id="@+id/tvmsg"
+            android:textColor="#FF0000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="32dp"
+            android:text="" />
+        <LinearLayout
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="#13227a"
+                    android:gravity="center"
+                    android:layout_gravity="left|center_vertical"
+                    android:text="音效开关"
+                    android:textSize="28dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btnEffect"
+                    android:layout_gravity="right|center_vertical"
+                    android:text="打开"
+                    android:padding="10dp"
+                    android:gravity="right|center"
+                    android:textSize="24dp"
+                    android:textColor="#13227a"
+                    android:layout_width="106dp"
+                    android:layout_height="53dp"
+                    android:background="@drawable/close"
+                    android:onClick="onBtnFeeectClick" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="#13227a"
+                    android:gravity="center"
+                    android:layout_gravity="left|center_vertical"
+                    android:text="换水开关"
+                    android:textSize="28dp"
+                    android:id="@+id/tvChangeTips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_gravity="right|center_vertical"
+                    android:text="打开"
+                    android:padding="10dp"
+                    android:gravity="right|center"
+                    android:textSize="24dp"
+                    android:textColor="#13227a"
+                    android:id="@+id/btnGet"
+                    android:layout_width="106dp"
+                    android:layout_height="53dp"
+                    android:background="@drawable/close"
+                    android:onClick="onBtnGetClick" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
