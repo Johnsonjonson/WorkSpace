@@ -19,8 +19,8 @@ public class OkHttpUtil {
 
     public final static String TAG = "OkHttpUtil";
 
-    public static String BASE_URL = "http://129.204.232.210:8524/change";
-    public static String GET_DATA_URL = "http://129.204.232.210:8524/data";
+    public static String BASE_URL = "http://192.168.1.114:8524/change";
+    public static String GET_DATA_URL = "http://192.168.1.114:8524/data";
 
     private final static OkHttpClient mOkHttpClient = new OkHttpClient();
     private static final String CHARSET_NAME = "UTF-8";

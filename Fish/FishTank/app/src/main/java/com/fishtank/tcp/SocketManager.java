@@ -18,7 +18,7 @@ public class SocketManager {
     private static WebSocket mSocket;
     private static Request request;
     private static FishTankWebSocketListener listener;
-    public static final String socketUrl = "ws://129.204.232.210:8080/fish/fishsocket";
+    public static final String socketUrl = "ws://192.168.1.114:8524/fish/fishsocket";
 
     private static OkHttpClient client;
     private static long sendTime = 0L;

@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 //        btnGet.setOnClickListener();
         //注册EventBus
         EventBus.getDefault().register(this);
-//        SocketManager.connectSocket();
+        SocketManager.connectSocket();
         updateeffectSwitch();
     }
 
@@ -70,25 +70,31 @@ public class MainActivity extends AppCompatActivity {
             timer.cancel();
             timer= null;
         }
-        timer = new Timer(true);
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                requestData();
-            }
-        }, 1000, 1000);
+//        timer = new Timer(true);
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                requestData();
+//            }
+//        }, 1000, 1000);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        timer.cancel();
+        if (timer != null ){
+            timer.cancel();
+            timer= null;
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        timer.cancel();
+        if (timer != null ){
+            timer.cancel();
+            timer= null;
+        }
     }
 
     public void onBtnGetClick(View view){
