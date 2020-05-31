@@ -68,6 +68,7 @@ class Example(wx.Frame):
 
     def updateStatus(self,data):
         pyData = json.loads(data)
+        print("8888888888888%s",pyData)
         status = pyData["status"]
         msg = pyData["msg"]
         if self.st1:
