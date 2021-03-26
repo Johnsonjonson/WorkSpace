@@ -1,0 +1,98 @@
+@CHARSET "UTF-8";
+
+* {
+	margin: 0px;
+	padding: 0px;
+	font-family: '楷体';
+	/*font-size: 24px*/
+	font-size: medium;
+	font-weight: bold;
+}
+
+select {
+	width: 150px;
+}
+
+#quit {
+	float: right;
+	padding-top: 5px;
+	padding-right: 10px;
+}
+
+#menu {
+	position: absolute;
+	bottom: 5px;
+}
+
+#menu li {
+	float: left;
+	margin-left: 10px;
+	list-style: none;
+}
+
+#header h1 {
+	margin: 0 auto;
+	width: 300px;
+	padding-top: 40px;
+	color:  rgba(27, 142, 236, 1);
+	font-size: 36px;
+	text-align:center
+}
+
+#content table {
+	width: 300px;
+	margin: 0 auto;
+	font-size: 24px;
+}
+
+#content table.wide {
+	width: 400px;
+	margin: 0 auto;
+}
+
+#content table.wide td {
+	vertical-align: middle;
+	width: auto;
+}
+
+#content thead td {
+	text-align: center;
+}
+
+#content td {
+	margin: 0 auto;
+}
+
+#content input {
+	height: 20px;
+	width: 150px;
+}
+
+#content .cols2 ,#content .cols4{
+	text-align: center;
+}
+
+#content .cols2 input {
+	width: auto;
+	height: 30px;
+	padding: 2px;
+	margin-right: 10px;
+}
+
+#content .result {
+	background: white;
+	text-align: center;
+}
+
+#content .result a {
+	color: blue;
+}
+
+#content .info {
+	color: red;
+	margin: 0 auto;
+}
+
+#main{
+	text-align:center;
+}

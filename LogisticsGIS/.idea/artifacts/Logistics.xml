@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Logistics">
+    <output-path>$PROJECT_DIR$/out/artifacts/Logistics</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="LogisticsGIS/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="LogisticsGIS" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="gson-2.8.01" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

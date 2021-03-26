@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.RegisterActivity">
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="注册"
+        android:textSize="28dp"
+        android:textStyle="bold" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1" >
+
+        <TableRow >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="用户名："
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/usernameRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="请输入用户名" />
+        </TableRow>
+        <TableRow >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="密码："
+                android:textColor="@color/black" />
+
+            <EditText
+                android:inputType="textPassword"
+                android:id="@+id/passwordRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入密码" />
+        </TableRow>
+
+        <TableRow >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="联系电话："
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/telRegister"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入电话" />
+        </TableRow>
+
+        <TableRow >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="性别："
+                android:textColor="@color/black"/>
+
+            <RadioGroup
+                android:id="@+id/sexRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/woman"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/nan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="男"
+                    android:text="男"
+                    android:textColor="@color/black"
+                    tools:text="男" />
+
+                <RadioButton
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nv"
+                    android:text="女"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content" />
+            </RadioGroup>
+        </TableRow>
+        <TableRow >
+            <TextView />
+            <LinearLayout >
+
+                <Button
+                    android:onClick="onRegisterClick"
+                    android:id="@+id/Register"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="注册" />
+            </LinearLayout>
+
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

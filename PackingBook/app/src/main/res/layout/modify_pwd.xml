@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1" >
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="91dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="修改密码"
+            android:textSize="28dp"
+            android:textStyle="bold" />
+        <TableRow >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="旧密码："
+                android:textColor="@color/black"/>
+            <EditText
+                android:inputType="textPassword"
+                android:id="@+id/old_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="请输入旧密码" />
+        </TableRow>
+        <TableRow >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="新密码："
+                android:textColor="@color/black" />
+            <EditText
+                android:inputType="textPassword"
+                android:id="@+id/new_pwd"
+                android:onClick="onLoginRegisterClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="请输入新的密码" />
+        </TableRow>
+        <TableRow >
+            <TextView />
+            <LinearLayout >
+                <Button
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btn_modify"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="修改" />
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="CommunitySystem">
+    <output-path>$PROJECT_DIR$/out/artifacts/CommunitySystem</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="CommunitySystem" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="gson-2.8.0" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="CommunitySystem/web/Web" />
+    </root>
+  </artifact>
+</component>

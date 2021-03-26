@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_margin="5dp"
+        android:id="@+id/tv_yuyue_status"
+        android:textSize="18dp"
+        android:text="预约状态：未预约"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_margin="5dp"
+        android:id="@+id/tv_park_name"
+        android:textSize="18dp"
+        android:text="预约车位：车位1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_margin="5dp"
+        android:id="@+id/yuyue_remain_time"
+        android:textSize="18dp"
+        android:text="预约停车剩余时间：1小时"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_margin="5dp"
+        android:id="@+id/btn_confirm"
+        android:textSize="18dp"
+        android:text="确认"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
