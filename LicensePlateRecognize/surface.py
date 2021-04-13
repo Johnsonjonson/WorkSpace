@@ -256,13 +256,16 @@ class Surface(ttk.Frame):
         print("run end")
 
     def request_user_info(self):
-        url = 'http://129.204.232.210:8534/get'
-        rs = urllib.request.urlopen(url).read()
-        pyData = json.loads(rs)
-        if pyData:
-            print(pyData['name'], pyData['car_num'], pyData['car_type'])
-            self.check_car_num = pyData['car_num']
-            self.update_user_info(pyData)
+        try:
+            url = 'http://129.204.232.210:8534/get'
+            rs = urllib.request.urlopen(url, timeout = 1).read()
+            pyData = json.loads(rs)
+            if pyData:
+                print(pyData['name'], pyData['car_num'], pyData['car_type'])
+                self.check_car_num = pyData['car_num']
+                self.update_user_info(pyData)
+        except:
+            pass
 
 
 def close_window():
