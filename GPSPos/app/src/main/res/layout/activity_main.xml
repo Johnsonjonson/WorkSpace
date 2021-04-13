@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Switch
+            android:layout_gravity="center"
+            android:textSize="30dp"
+            android:id="@+id/switchFengming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="蜂鸣器" />
+
+        <Switch
+            android:id="@+id/switchDeng"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="灯"
+            android:textSize="30dp" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="40dp"
+            android:id="@+id/weiDu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"/>
+
+        <TextView
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="40dp"
+            android:id="@+id/jingDu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -138,7 +138,7 @@ class Surface(ttk.Frame):
         if self.camera is None:
             # video = "http://admin:admin@172.30.18.149:8081/video"
             # self.camera = cv2.VideoCapture(video)
-            self.camera = cv2.VideoCapture(0)
+            self.camera = cv2.VideoCapture(1)
             if not self.camera.isOpened():
                 # mBox.showwarning('警告', '摄像头打开失败！')
                 self.camera = None

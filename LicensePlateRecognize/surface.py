@@ -197,9 +197,9 @@ class Surface(ttk.Frame):
             return
         print(u"-----------------------开始识别-----------------")
         try:
-            img_bgr = self.camera.read()
-            if os.path.exists("test"):
-                os.makedirs("test") 
+            _, img_bgr = self.camera.read()
+            if not os.path.exists("test"):
+                os.makedirs("test")
             cv2.imwrite("tmp.jpg", img_bgr)
             # cv2.imencode("tmp.jpg", img_bgr)[1].tofile("test/tmp.jpg")
             result = CarRecognition.recognize("tmp.jpg")
