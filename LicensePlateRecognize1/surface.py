@@ -74,6 +74,8 @@ class Surface(ttk.Frame):
         self.color_ctl.grid(column=0, row=4, sticky=tk.W)
         self.result = ttk.Label(frame_right4, text="", width="20",font = ("",15))
         self.result.grid(column=0, row=1, sticky=tk.W)
+        self.resultShuaka = ttk.Label(frame_right4, text="", width="20", font=("", 15))
+        self.resultShuaka.grid(column=0, row=2, sticky=tk.W)
         from_vedio_ctl.pack(anchor="se", pady="5")
         from_pic_ctl.pack(anchor="se", pady="5")
         start_recognize.pack(anchor="se", pady="5")
@@ -129,7 +131,7 @@ class Surface(ttk.Frame):
 
     def from_vedio(self):
         if not self.islegal:
-            self.result.configure(text="未刷卡，请刷卡后开启识别", background="#FF0000", state='enable')
+            self.resultShuaka.configure(text="未刷卡，请刷卡后开启识别", background="#FF0000", state='enable')
             return
         if self.is_from_vedio:
             return
@@ -175,11 +177,13 @@ class Surface(ttk.Frame):
                     self.user_total_time.configure(text="耗时：" + "{0}天{1}时{2}分{3}秒".format(result.days,hours,minutes,seconds),state='enable')
                     self.result.configure(text="比对成功，通过", background="#00FF00", state='enable')
                     self.setCardType()
+                    
                     def fun():
+                        self.image_ctl.configure(image="")
                         self.r_ctl.configure(text="等待识别")
                         self.color_ctl.configure(text="等待识别",  state='enable')
                         self.roi_ctl.configure(image="", state='enable')
-                        self.result.configure(text="等待识别", state='enable')
+                        self.result.configure(text="", state='enable')
                         self.user_total_time.configure(text="耗时：", state='enable')
                         self.user_exit_time.configure(text="离开时间：", state='enable')
                         self.user_enter_time.configure(text="进入时间：", state='enable')
@@ -203,7 +207,7 @@ class Surface(ttk.Frame):
             self.result.configure(text="比对失败,不通过", background="#FF0000", state='enable')
     def start_recognize(self):
         if not self.islegal:
-            self.result.configure(text="未刷卡，请刷卡后开启识别", background="#FF0000", state='enable')
+            self.resultShuaka.configure(text="未刷卡，请刷卡后开启识别", background="#FF0000", state='enable')
             return
         if self.camera is None:
             return
@@ -222,7 +226,7 @@ class Surface(ttk.Frame):
 
     def from_pic(self):
         if not self.islegal:
-            self.result.configure(text="未刷卡，请刷卡后开启识别", background="#FF0000", state='enable')
+            self.resultShuaka.configure(text="未刷卡，请刷卡后开启识别", background="#FF0000", state='enable')
             return
         self.is_from_vedio = False
         self.pic_path = askopenfilename(title="选择识别图片", filetypes=[("jpg图片", "*.jpg")])
@@ -262,21 +266,29 @@ class Surface(ttk.Frame):
         print(response)
 
     def request_user_info(self):
-        url = 'http://129.204.232.210:8540/get'
-        rs = urllib.request.urlopen(url).read()
-        pyData = json.loads(rs)
-        if pyData:
-            # print(pyData['time'], pyData['cardType'])
-            self.cardType = pyData['cardType']
-            if pyData['cardType'] == '1':
-                self.islegal = True
-            else:
-                self.islegal = False
-            if self.islegal and not self.isShuaka:
-                self.isShuaka = True
-                self.result.configure(text="已刷卡，开启识别", background="#FF0000", state='enable')
-            # self.check_car_num = pyData['car_num']
-            # self.update_user_info(pyData)
+        try:
+            url = 'http://129.204.232.210:8540/get'
+            rs = urllib.request.urlopen(url, timeout = 1).read()
+            pyData = json.loads(rs)
+            if pyData:
+                print(pyData['cardType'])
+                self.cardType = pyData['cardType']
+                if pyData['cardType'] == '1':
+                    self.islegal = True
+                    self.resultShuaka.configure(text="已刷卡，开启识别", background="#00FF00", state='enable')
+                elif pyData['cardType'] == '2':
+                    self.resultShuaka.configure(text="非有效卡，请重刷", background="#FF0000", state='enable')
+                    self.islegal = False
+                else:
+                    self.resultShuaka.configure(text="未刷卡，请刷卡后开启识别", background="#FF0000", state='enable')
+                    self.islegal = False
+                # if self.islegal:
+                #     # self.isShuaka = True
+                #     self.result.configure(text="已刷卡，开启识别", background="#00FF00", state='enable')
+                # self.check_car_num = pyData['car_num']
+                # self.update_user_info(pyData)
+        except:
+            pass
 
 
 def close_window():
