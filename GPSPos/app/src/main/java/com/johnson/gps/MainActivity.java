@@ -11,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -45,28 +46,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setCustomView(R.layout.actionbar_title);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         //下面图1
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            //全屏显示
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-
-            WindowManager.LayoutParams lp = getWindow().getAttributes();
-            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
-
-            //下面图2
-//        lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
-            //下面图3
-//        lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT;
-            getWindow().setAttributes(lp);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            //全屏显示
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//
+//            WindowManager.LayoutParams lp = getWindow().getAttributes();
+//            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+//
+//            //下面图2
+////        lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+//            //下面图3
+////        lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT;
+//            getWindow().setAttributes(lp);
+//        }
         mActivity = this;
         jingDu = findViewById(R.id.jingDu);
-        jingDu.setText("经度：");
-        jingDu.setTextColor(getResources().getColor(R.color.green));
+        jingDu.setText("");
         weiDu = findViewById(R.id.weiDu);
-        weiDu.setText("纬度：" );
-        weiDu.setTextColor(getResources().getColor(R.color.green));
+        weiDu.setText("" );
 
         switchFengming = (Switch) findViewById(R.id.switchFengming);
         switchDeng = (Switch) findViewById(R.id.switchDeng);
@@ -190,8 +191,8 @@ public class MainActivity extends AppCompatActivity {
                                 JsonObject jsonObject = new JsonObject();
                                 Log.d("result ===  ", GPSBean.getJingdu()+"    "+ GPSBean.getWeidu());
 //                                double parseDouble = Double.parseDouble(tempResult);
-                                weiDu.setText("经度："+ GPSBean.getJingdu() );
-                                jingDu.setText("纬度：" + GPSBean.getWeidu());
+                                weiDu.setText(""+ GPSBean.getJingdu() );
+                                jingDu.setText("" + GPSBean.getWeidu());
 
                             }
                         });
