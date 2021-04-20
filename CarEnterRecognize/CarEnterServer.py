@@ -9,22 +9,23 @@ import datetime
 
 app = flask.Flask(__name__)
 userid = 0
-#dakatime = ""
+dakatime = ""
 
-#cardType = 0  # 0 ，1有效卡 ，2 无效卡
+cardType = 0  # 0 ，1有效卡 ，2 无效卡
 
 data = {
     'cardType': 0,
+    'time': ''
 }
 
 
 class SetCard(MethodView):
     def get(self):
-        #global cardType
+        global cardType
         cardType = request.args.get("card_type", 0)
-        #global dakatime
-        #dakatime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        #data['time'] = dakatime
+        global dakatime
+        dakatime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        data['time'] = dakatime
         data['cardType'] = cardType
         return "200"
 
