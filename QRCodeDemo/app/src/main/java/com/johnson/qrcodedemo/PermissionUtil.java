@@ -6,9 +6,6 @@ import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-/**
- * Created by JanRoid on 2016/4/1.
- */
 public class PermissionUtil {
     /**
      * 申请权限回调使用常量

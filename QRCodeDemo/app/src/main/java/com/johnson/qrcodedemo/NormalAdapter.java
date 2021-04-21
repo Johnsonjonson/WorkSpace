@@ -1,0 +1,93 @@
+package com.johnson.qrcodedemo;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Build;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
+// ① 创建Adapter
+public class NormalAdapter extends RecyclerView.Adapter<NormalAdapter.VH>{
+    // 事件回调监听
+    private NormalAdapter.OnItemClickListener onItemClickListener;
+
+    //② 创建ViewHolder
+    public static class VH extends RecyclerView.ViewHolder{
+        public final TextView parkName;
+        public final LinearLayout parkLayout;
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        public VH(View v) {
+            super(v);
+            parkName = (TextView) v.findViewById(R.id.park_name);
+            parkLayout = (LinearLayout) v.findViewById(R.id.park_layout_1);
+            parkLayout.setBackground(v.getContext().getDrawable(R.drawable.layout_bg_normal));
+        }
+    }
+
+    private List<String> mDatas;
+    public NormalAdapter(List<String> data) {
+        this.mDatas = data;
+    }
+
+    //③ 在Adapter中实现3个方法
+    @Override
+    public void onBindViewHolder(VH holder, int position) {
+        holder.parkName.setText("停车位"+mDatas.get(position));
+        holder.parkLayout.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NewApi")
+            @Override
+            public void onClick(View v) {
+                holder.parkLayout.setBackground(v.getContext().getDrawable(R.drawable.layout_bg));
+//                Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+                if(onItemClickListener != null) {
+                    int pos = holder.getLayoutPosition();
+                    onItemClickListener.onItemClick(holder.itemView, pos);
+                }
+            }
+        });
+        holder.parkLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(onItemClickListener != null) {
+                    int pos = holder.getLayoutPosition();
+                    onItemClickListener.onItemLongClick(holder.itemView, pos);
+                }
+                //表示此事件已经消费，不会触发单击事件
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return mDatas.size();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+        //LayoutInflater.from指定写法
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.park_item, parent, false);
+        return new VH(v);
+    }
+
+    // ① 定义点击回调接口
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view, int position);
+    }
+
+    // ② 定义一个设置点击监听器的方法
+    public void setOnItemClickListener(NormalAdapter.OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+}
