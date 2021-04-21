@@ -18,9 +18,9 @@ import okhttp3.Response;
 public class OkHttpUtil {
 
     public final static String TAG = "OkHttpUtil";
-    private static final String BASE_URL =  "http://129.204.232.210:8527/get";
+    public static final String BASE_URL =  "http://129.204.232.210:8542/get_data";
 
-    public static String GET_DATA_URL = "http://129.204.232.210:8527/update";
+    public static String SET_DATA_URL = "http://129.204.232.210:8542/update";
 
     private final static OkHttpClient mOkHttpClient = new OkHttpClient();
     private static final String CHARSET_NAME = "UTF-8";
