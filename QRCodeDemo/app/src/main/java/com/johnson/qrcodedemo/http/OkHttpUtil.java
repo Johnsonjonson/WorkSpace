@@ -20,7 +20,10 @@ public class OkHttpUtil {
     public final static String TAG = "OkHttpUtil";
     public static final String BASE_URL =  "http://129.204.232.210:8542/get_data";
 
-    public static String SET_DATA_URL = "http://129.204.232.210:8542/update";
+    public static String BOOK_PARK_URL = "http://129.204.232.210:8542/book";
+    public static String TAKE_CAR_URL = "http://129.204.232.210:8542/take";
+    public static String QUERY_PARK_URL = "http://129.204.232.210:8542/query";
+    public static String QUERY_PARK_BY_CHEPAI = "http://129.204.232.210:8542/query_chepai";
 
     private final static OkHttpClient mOkHttpClient = new OkHttpClient();
     private static final String CHARSET_NAME = "UTF-8";

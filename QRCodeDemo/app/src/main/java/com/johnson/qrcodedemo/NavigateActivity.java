@@ -2,6 +2,7 @@ package com.johnson.qrcodedemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,25 +16,32 @@ import android.widget.Toast;
 import com.johnson.qrcodedemo.http.NameValuePair;
 import com.johnson.qrcodedemo.http.OkHttpUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class NavigateActivity extends AppCompatActivity {
 
+    private Context mContext;
+    private int index;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
 //        获取上一个activity传过来的参数
         Intent intent=getIntent();
         Bundle bundle=intent.getBundleExtra("data");
-        int index =0;
+        index = 0;
         String chepaiStr = "";
         String yuyueStr = "";
         String phoneStr = "";
         if (bundle!=null) {
             index = bundle.getInt("index");
             chepaiStr = bundle.getString("chepai");
-            yuyueStr = "停车位"+index;
+            yuyueStr = "停车位"+ index;
             phoneStr = bundle.getString("phone");
         }
         setContentView(R.layout.activity_navigate);
@@ -121,16 +129,27 @@ public class NavigateActivity extends AppCompatActivity {
                     final String result;
                     try {
                         ArrayList<NameValuePair> param = new ArrayList<>();
-                        param.add(new NameValuePair("index","0"));
-                        param.add(new NameValuePair("phone",""));
-                        param.add(new NameValuePair("chepai",""));
-                        result = OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(OkHttpUtil.SET_DATA_URL,param));
-                        new Handler(MainActivity.getActivity().getMainLooper()).post(new Runnable() {
+                        param.add(new NameValuePair("index",index+""));
+                        result = OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(OkHttpUtil.TAKE_CAR_URL,param));
+                        new Handler(mContext.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
                                 // 在这里执行你要想的操作 比如直接在这里更新ui或者调用回调在 在回调中更新ui
                                 Log.d("result ===  ",result);
-                                startActivity(new Intent(NavigateActivity.this,MainActivity.class));
+                                JSONObject jsParam = null;
+                                try {
+                                    jsParam = new JSONObject(result);
+                                    int errorno = jsParam.optInt("errorno", 0);
+                                    if(errorno ==1){
+                                        Toast.makeText(NavigateActivity.this, "离开成功", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(NavigateActivity.this,MainActivity.class));
+                                    }else{
+                                        Toast.makeText(NavigateActivity.this, "请求离开失败，请重试", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    Toast.makeText(NavigateActivity.this, "请求离开失败，请重试", Toast.LENGTH_SHORT).show();
+                                    e.printStackTrace();
+                                }
                             }
                         });
                     } catch (IOException e) {

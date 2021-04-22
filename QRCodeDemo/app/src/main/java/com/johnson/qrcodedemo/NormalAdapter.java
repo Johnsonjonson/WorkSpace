@@ -1,17 +1,21 @@
 package com.johnson.qrcodedemo;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.johnson.qrcodedemo.bean.Park;
 
 import java.util.List;
 
@@ -24,24 +28,36 @@ public class NormalAdapter extends RecyclerView.Adapter<NormalAdapter.VH>{
     public static class VH extends RecyclerView.ViewHolder{
         public final TextView parkName;
         public final LinearLayout parkLayout;
+        public final ImageView parkToggle;
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public VH(View v) {
             super(v);
             parkName = (TextView) v.findViewById(R.id.park_name);
             parkLayout = (LinearLayout) v.findViewById(R.id.park_layout_1);
+            parkToggle = (ImageView) v.findViewById(R.id.park_toggle1);
             parkLayout.setBackground(v.getContext().getDrawable(R.drawable.layout_bg_normal));
         }
     }
 
-    private List<String> mDatas;
-    public NormalAdapter(List<String> data) {
+    private List<Park> mDatas;
+    private Activity context;
+    public NormalAdapter(List<Park> data,Activity context) {
         this.mDatas = data;
+        this.context = context;
     }
 
     //③ 在Adapter中实现3个方法
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        holder.parkName.setText("停车位"+mDatas.get(position));
+        Park parkItem = mDatas.get(position);
+        holder.parkName.setText("停车位"+parkItem.getId());
+        int status = parkItem.getStatus();
+        if (status ==0){
+            holder.parkToggle.setBackground(context.getApplication().getDrawable(R.drawable.park_kongxian_02e4f1));
+        }else{
+            holder.parkToggle.setBackground(context.getApplication().getDrawable(R.drawable.park_zhanyong_cdcdcd));
+        }
         holder.parkLayout.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
             @Override

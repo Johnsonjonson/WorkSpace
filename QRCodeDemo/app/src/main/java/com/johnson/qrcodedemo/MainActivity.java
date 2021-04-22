@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mActivity = this;
         PermissionUtil.checkCameraPermissions(1);
-        getData();
+//        getData();
     }
 
     public void onQRScanClick(View view) {

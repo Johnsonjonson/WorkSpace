@@ -49,7 +49,6 @@ public class ParkDetailActivity extends AppCompatActivity {
     private TextView tvYuyue;
     private TextView tvKongxian;
     private TextView tvZhanyong;
-    private TextView tvPark;
     private LinearLayout parkLayout1;
     private LinearLayout parkLayout2;
     private LinearLayout parkLayout3;
@@ -57,6 +56,7 @@ public class ParkDetailActivity extends AppCompatActivity {
     private ToggleButton parkToggle2;
     private ToggleButton parkToggle3;
 
+    private TextView tvPark;
     private ImageButton btnPack;
     private FrameLayout framePack;
     private Park selectedPark;
