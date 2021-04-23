@@ -5,6 +5,15 @@ public class Park {
     private int id;
     private String chepai;
     private String phone;
+    private boolean isSelect;
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
 
     public String getPhone() {
         return phone;
@@ -39,10 +48,11 @@ public class Park {
     }
 
 
-    public Park(int status, int id, String chepai, String phone) {
+    public Park(int status, int id, String chepai, String phone,boolean isSelect) {
         this.status = status;
         this.id = id;
         this.chepai = chepai;
         this.phone = phone;
+        this.isSelect = isSelect;
     }
 }

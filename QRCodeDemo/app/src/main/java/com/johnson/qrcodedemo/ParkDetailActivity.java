@@ -74,17 +74,28 @@ public class ParkDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_park_detail);
         mActivity = this;
-        List<String> data = initData();
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        initView();
+        initRecyclerView();
+        initInfoDialog();
+        requestAllPark();
+    }
+
+    private void initView() {
 //        tvYuyue = findViewById(R.id.tv_yuyue);
         tvKongxian = findViewById(R.id.tv_kongxian);
         tvZhanyong = findViewById(R.id.tv_zhanyong);
         btnPack = findViewById(R.id.btn_park);
         framePack = findViewById(R.id.frame_park);
         tvPark = findViewById(R.id.tv_park);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager = new GridLayoutManager(this, 3, OrientationHelper.VERTICAL, false);
-//        mRecyclerView.setLayoutManager(mLayoutManager);
+    }
+
+    @SuppressLint("WrongConstant")
+    private void initRecyclerView() {
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        //        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager = new GridLayoutManager(this, 4, OrientationHelper.VERTICAL, false);
+//        layoutManager.set
+        //        mRecyclerView.setLayoutManager(mLayoutManager);
         //设置布局管理器
         recyclerView.setLayoutManager(layoutManager);
         //设置为垂直布局，这也是默认的
@@ -95,7 +106,6 @@ public class ParkDetailActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onItemClick(View view, int position) {
-//                Toast.makeText(ParkDetailActivity.this,"click " + position + " item", Toast.LENGTH_SHORT).show();
                 selectedIndex = position+1;
                 updateSelect(position);
             }
@@ -110,8 +120,6 @@ public class ParkDetailActivity extends AppCompatActivity {
 //        recyclerView.addItemDecoration(new DividerGridItemDecoration(this));
         //设置增加或删除条目的动画
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        initInfoDialog();
-        requestAllPark();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -157,7 +165,7 @@ public class ParkDetailActivity extends AppCompatActivity {
             public void run() {
                 requestAllPark();
             }
-        }, 1000, 5000);
+        }, 1000, 1000);
     }
 
     @Override
@@ -176,11 +184,13 @@ public class ParkDetailActivity extends AppCompatActivity {
             selectedPark = park;
             int status = park.getStatus();
             if (status == 0) {
-                btnPack.setClickable(true);
+                btnPack.setEnabled(true);
+                framePack.setEnabled(true);
                 btnPack.setBackground(getApplication().getDrawable(R.drawable.kongxian_bg));
                 framePack.setBackground(getApplication().getDrawable(R.drawable.kongxian_bg));
             } else {
-                btnPack.setClickable(false);
+                framePack.setEnabled(false);
+                btnPack.setEnabled(false);
                 btnPack.setBackground(getApplication().getDrawable(R.drawable.zhanyong_bg));
                 framePack.setBackground(getApplication().getDrawable(R.drawable.zhanyong_bg));
             }
@@ -221,14 +231,6 @@ public class ParkDetailActivity extends AppCompatActivity {
             }
         });
         detailDialog.dismiss();
-    }
-
-    private List<String> initData() {
-        List<String> data = new ArrayList<String>();
-        for (int i = 1; i < 11; i++) {
-            data.add(i+"");
-        }
-        return data;
     }
 
     public void onParkClick(View view) {
@@ -274,6 +276,10 @@ public class ParkDetailActivity extends AppCompatActivity {
                                         Intent intent = new Intent(ParkDetailActivity.this, NavigateActivity.class);
                                         intent.putExtra("data", bundle);
                                         startActivity(intent);
+                                    }else if(errorno ==-1){
+                                        Toast.makeText(ParkDetailActivity.this, "车牌已预约,预约失败，请重试", Toast.LENGTH_SHORT).show();
+                                    }else if(errorno ==-2){
+                                        Toast.makeText(ParkDetailActivity.this, "车位已预约 ,预约失败，请重试", Toast.LENGTH_SHORT).show();
                                     }else{
                                         Toast.makeText(ParkDetailActivity.this, "预约失败，请重试", Toast.LENGTH_SHORT).show();
                                     }
@@ -321,15 +327,18 @@ public class ParkDetailActivity extends AppCompatActivity {
                                         int id = jsonObject.optInt("id", 0);
                                         String chepai = jsonObject.optString("chepai", "");
                                         String phone = jsonObject.optString("phone", "");
-                                        parkList.add(new Park(status, id, chepai, phone));
+                                        boolean isSelect = false;
+                                        if (id == selectedIndex){
+                                            isSelect = true;
+                                        }
+                                        Park park = new Park(status, id, chepai, phone,isSelect);
+
+                                        parkList.add(park);
                                         // 日志打印结果：
 //                                        Log.d(TAG, "analyzeJSONArray1 解析的结果：status" + status + " id:" + id);
                                     }
                                     mAdapter.notifyDataSetChanged();
                                     updatePark();
-                                    Log.d(TAG,"+++++=++++++"+selectedIndex+"");
-                                    updateSelect(selectedIndex-1);
-//                                    updateUserStatus();
                                 }catch (Exception e){
 
                                 }
@@ -388,7 +397,7 @@ public class ParkDetailActivity extends AppCompatActivity {
         EditText etChepaiQuery = view2.findViewById(R.id.et_chepai);
         Button btnQuery = view2.findViewById(R.id.btn_query);
         // 设置参数
-        builder.setTitle("车牌信息").setIcon(R.drawable.ic_launcher_background).setView(view2);
+        builder.setTitle("查找车牌").setIcon(R.drawable.ic_launcher_background).setView(view2);
         // 创建对话框
         queryDialog = builder.show();
 

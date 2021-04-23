@@ -25,7 +25,50 @@ def connect():
     else:  # try没有异常的时候才会执行
         print(u"----------------连接数据库  ---------------  数据库连接sucessfully!")
         return mydb
+    
+def isChepaiExit(chepai):
+        isExit = False
+        try:
+            queryDB = connect()
+            cursor = queryDB.cursor()
+            # SQL 查询语句
+            sql = "SELECT * FROM t_park where chepai=%s" % chepai
+            # 执行SQL语句
+            cursor.execute(sql)
+            # 获取所有记录列表
+            results = cursor.fetchall()
+            if len(results) <= 0:
+                isExit = False
+            else:
+                isExit= True
+        except:
+            isExit = False
+        queryDB.close()
+        return isExit
 
+
+def isParkBooked(id):
+    try:
+        isBooked = False
+        queryDB = connect()
+        cursor = queryDB.cursor()
+        # SQL 查询语句
+        sql = "SELECT * FROM t_park where id=%s" % id
+        # val = (status, chepai, phone, id)
+        # 执行SQL语句
+        # cursor.execute(sql, val)
+        cursor.execute(sql)
+        # 获取所有记录列表
+        results = cursor.fetchall()
+        for row in results:
+            status = int(row[1])
+            if status != 0:
+                isBooked = True
+                break
+    except:
+        isBooked = False
+    queryDB.close()
+    return isBooked
 
 # 预约
 class BookPark(MethodView):
@@ -36,6 +79,16 @@ class BookPark(MethodView):
             status = 1
             phone = request.args.get("phone", '')
             chepai = request.args.get("chepai", '')
+            if isChepaiExit(chepai):
+                result = {
+                    "errorno": -1,  #车牌已预约
+                }
+                return flask.jsonify(result)
+            if isParkBooked(id):
+                result = {
+                    "errorno": -2,  #车位已预约
+                }
+                return flask.jsonify(result)
             sql = "UPDATE t_park SET status=%s,chepai=%s, phone=%s WHERE id=%s"
             val = (status, chepai, phone,id)
             mycursor = bookDB.cursor()
@@ -130,7 +183,7 @@ class QueryParkByChepai(MethodView):
             queryDB = connect()
             cursor = queryDB.cursor()
             # SQL 查询语句
-            sql = "SELECT * FROM t_park where chepai=%s"  % chepai
+            sql = "SELECT * FROM t_park where chepai='%s'" % chepai
             # 执行SQL语句
             cursor.execute(sql)
             # 获取所有记录列表
@@ -156,5 +209,5 @@ if __name__ == '__main__':
     app.add_url_rule('/query', view_func=QueryPark.as_view('query'))
     app.add_url_rule('/book', view_func=BookPark.as_view('book'))
     app.add_url_rule('/take', view_func=TakeCar.as_view('take'))
-    app.add_url_rule('/query_one', view_func=QueryParkByChepai.as_view('query_chepai'))
+    app.add_url_rule('/query_chepai', view_func=QueryParkByChepai.as_view('query_chepai'))
     app.run(host='0.0.0.0', port=8542)

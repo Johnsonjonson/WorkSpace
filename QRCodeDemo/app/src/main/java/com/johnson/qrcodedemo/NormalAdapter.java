@@ -53,6 +53,12 @@ public class NormalAdapter extends RecyclerView.Adapter<NormalAdapter.VH>{
         Park parkItem = mDatas.get(position);
         holder.parkName.setText("停车位"+parkItem.getId());
         int status = parkItem.getStatus();
+        boolean itemSelect = parkItem.isSelect();
+        if(itemSelect){
+            holder.parkLayout.setBackground(context.getDrawable(R.drawable.layout_bg));
+        }else{
+            holder.parkLayout.setBackground(context.getDrawable(R.drawable.layout_bg_normal));
+        }
         if (status ==0){
             holder.parkToggle.setBackground(context.getApplication().getDrawable(R.drawable.park_kongxian_02e4f1));
         }else{
