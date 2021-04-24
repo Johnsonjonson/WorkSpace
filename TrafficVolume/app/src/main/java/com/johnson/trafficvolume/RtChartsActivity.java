@@ -86,9 +86,9 @@ public class RtChartsActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 //刷新图表
                 updateChart();
-                totalTv.setText("景区车流量总数：" + enter);
-                enterTv.setText("进入景区车辆数：" + exit);
-                exitTv.setText("离开景区车辆数：" + total);
+                totalTv.setText("景区车流量总数：" + total);
+                enterTv.setText("进入景区车辆数：" + enter);
+                exitTv.setText("离开景区车辆数：" + exit);
                 parkTv.setText("景区剩余车位数：" + park);
                 super.handleMessage(msg);
             }

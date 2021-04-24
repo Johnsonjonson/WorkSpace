@@ -93,7 +93,7 @@ public class ParkDetailActivity extends AppCompatActivity {
     private void initRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         //        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager = new GridLayoutManager(this, 4, OrientationHelper.VERTICAL, false);
+        layoutManager = new GridLayoutManager(this, 3, OrientationHelper.VERTICAL, false);
 //        layoutManager.set
         //        mRecyclerView.setLayoutManager(mLayoutManager);
         //设置布局管理器
