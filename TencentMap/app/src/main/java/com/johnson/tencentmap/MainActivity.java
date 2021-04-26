@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String BASE_URL = "http://119.3.54.225:8991";
+    public static final String BASE_URL = "http://129.204.232.210:8544/";
 
     private MapView mapView;
     private TencentMap map;
@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private Marker marker;
     private Button button;
     private LatLng latlng;
+    private Button buttonYuyue;
+    private boolean isBooked = false;
 
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mapView = this.findViewById(R.id.mapview);
         button = this.findViewById(R.id.button);
+        buttonYuyue = this.findViewById(R.id.button1);
         map = mapView.getMap();
         map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setIndoorLevelPickerEnabled(true);
@@ -80,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         final LatLng latLng = new LatLng(0, 0);
         MarkerOptions markerOptions = new MarkerOptions(latLng);
         marker = map.addMarker(markerOptions);
+        marker.setTitle("车位");
+        marker.showInfoWindow();
         marker.setVisible(false);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +100,23 @@ public class MainActivity extends AppCompatActivity {
                     Intent download = new Intent(Intent.ACTION_VIEW, Uri.parse("https://pr.map.qq.com/j/tmap/download?key=" + key));
                     startActivity(download);
                 }
+            }
+        });
+        button.setEnabled(isBooked);
+        buttonYuyue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isBooked = !isBooked;
+                button.setEnabled(isBooked);
+                String yuyuestr = "预约";
+                String toastStr = "预约成功，点击导航可开始导航";
+                if (isBooked){
+                    yuyuestr = "取消";
+                }else{
+                    toastStr = "取消成功，点击预约可预约停车";
+                }
+                buttonYuyue.setText(yuyuestr);
+                Toast.makeText(MainActivity.this, toastStr, Toast.LENGTH_SHORT).show();
             }
         });
     }
