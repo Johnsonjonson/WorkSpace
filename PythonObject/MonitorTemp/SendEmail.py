@@ -1,29 +1,27 @@
 import smtplib
 from email.mime.text import MIMEText
 
-def send():
+def send(msg):
 	# 设置服务器所需信息
 	# 163邮箱服务器地址
-	mail_host = 'smtp.163.com'
-	# mail_host = 'smtp.qq.com'
+	# mail_host = 'smtp.163.com'
+	mail_host = 'smtp.qq.com'
 	
 	
 	# 163用户名
-	mail_user = '18819267466'
-	# mail_user = '761550646@qq.com'
+	mail_user = '495683172@qq.com'
 	# 密码(部分邮箱为授权码)  163邮箱为授权码 http://help.163.com/14/0923/22/A6S1FMJD00754KNP.html
 	# QQ邮箱为授权码 https://service.mail.qq.com/cgi-bin/help?subtype=1&&id=28&&no=1001256
-	mail_pass = 'EJCFSVBRMSWOPKKJ'
-	# mail_pass = 'ilove123'
+	mail_pass = 'ncmixoqasnufbjee'
 	# 邮件发送方邮箱地址
-	sender = '18819267466@163.com'
+	sender = '495683172@qq.com'
 	# sender = '761550646@qq.com'
 	# 邮件接受方邮箱地址，注意需要[]包裹，这意味着你可以写多个邮件地址群发
-	receivers = ['740848126@qq.com']
+	receivers = ['smallfly517@163.com']
 	
 	# 设置email信息
 	# 邮件内容设置
-	message = MIMEText('警报：温度过低', 'plain', 'utf-8')
+	message = MIMEText(msg, 'plain', 'utf-8')
 	# 邮件主题
 	message['Subject'] = '警报！！！！'
 	# 发送方信息
