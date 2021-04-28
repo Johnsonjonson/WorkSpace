@@ -322,4 +322,6 @@ public class WifiAdmin {
     public String GetBSSID() {
         return (mWifiInfo == null) ? "NULL" : mWifiInfo.getBSSID();
     }
+
+
 }
