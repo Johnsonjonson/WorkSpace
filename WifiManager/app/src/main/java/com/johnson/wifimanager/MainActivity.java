@@ -36,6 +36,7 @@ import android.os.Bundle;
 import android.os.PatternMatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 //                updateSelect(position);
                 ScanResult scanResult = wifiList.get(position);
 
-                Toast.makeText(MainActivity.this," click " + position + " item", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this," click " + position + " item", Toast.LENGTH_SHORT).show();
                 String capabilities = "";
 
                 if (scanResult.capabilities.contains("WPA2-PSK")) {
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     alert.setTitle(ssid);
                     alert.setMessage("输入密码");
                     final EditText et_password = new EditText(MainActivity.this);
+                    et_password.setInputType(EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
                     final SharedPreferences preferences = getSharedPreferences("wifi_password", Context.MODE_PRIVATE);
                     et_password.setText(preferences.getString(ssid, ""));
                     alert.setView(et_password);

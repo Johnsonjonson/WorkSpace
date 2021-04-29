@@ -13,6 +13,10 @@
 <!--    android:text="断开连接"-->
 <!--    android:layout_width="wrap_content"-->
 <!--    android:layout_height="wrap_content"/>-->
+<!--    <EditText-->
+<!--        android:inputType="textPassword"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"/>-->
 <Button
     android:onClick="onBtnPing"
     android:id="@+id/btn_ping"

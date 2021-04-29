@@ -18,8 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WifiManager">
-        <activity android:name=".PingActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".PingActivity" android:launchMode="singleTask"></activity>
+        <activity android:name=".MainActivity" android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
