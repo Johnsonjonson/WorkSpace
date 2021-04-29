@@ -47,7 +47,8 @@ public class PingUtil {
             while ((line = in.readLine()) != null) {
                 buffer.append(line);
             }
-            System.out.println("Return ============" + buffer.toString());
+//            ip = buffer.toString();
+//            System.out.println("Return ============" + buffer.toString());
             if (status == 0) {
                 ip = getIps(buffer.toString());
             }

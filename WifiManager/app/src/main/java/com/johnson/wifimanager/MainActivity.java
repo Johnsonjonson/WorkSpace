@@ -2,6 +2,7 @@ package com.johnson.wifimanager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -11,14 +12,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.NetworkRequest;
+import android.net.NetworkSpecifier;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.net.wifi.WifiNetworkSpecifier;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PatternMatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,47 +46,19 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Johnson";
-    ArrayList<String> addresslist = new ArrayList<>();
-    HashSet<String> ipList = new HashSet<>();
+
     private List<ScanResult> wifiList = new ArrayList<>();
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private NormalAdapter mAdapter;
+    protected WifiAdmin mWifiAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        initData();
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                for (String s : addresslist) {
-//                    String ip = PingUtil.pingUrl(s);
-//                    ipList.add(ip);
-//                }
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (ipList.size() == addresslist.size()){
-//                            Toast.makeText(MainActivity.this, "正常", Toast.LENGTH_SHORT).show();
-//                        }else{
-//                            Toast.makeText(MainActivity.this, "异常", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-//
-//            }
-//        }).start();
 
-
-
-//
-//        try {
-//            PingUtil.pingUrl("www.baidu.com");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        mWifiAdmin = new WifiAdmin(MainActivity.this);
         initRecyclerView();
         registerPermission();
     }
@@ -92,7 +82,90 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
 //                selectedIndex = position+1;
 //                updateSelect(position);
+                ScanResult scanResult = wifiList.get(position);
+
                 Toast.makeText(MainActivity.this," click " + position + " item", Toast.LENGTH_SHORT).show();
+                String capabilities = "";
+
+                if (scanResult.capabilities.contains("WPA2-PSK")) {
+                    // WPA-PSK加密
+                    capabilities = "psk2";
+                } else if (scanResult.capabilities.contains("WPA-PSK")) {
+                    // WPA-PSK加密
+                    capabilities = "psk";
+                } else if (scanResult.capabilities.contains("WPA-EAP")) {
+                    // WPA-EAP加密
+                    capabilities = "eap";
+                } else if (scanResult.capabilities.contains("WEP")) {
+                    // WEP加密
+                    capabilities = "wep";
+                } else {
+                    // 无密码
+                    capabilities = "";
+                }
+
+                if (!capabilities.equals("")) {
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                    String ssid = scanResult.SSID;
+                    alert.setTitle(ssid);
+                    alert.setMessage("输入密码");
+                    final EditText et_password = new EditText(MainActivity.this);
+                    final SharedPreferences preferences = getSharedPreferences("wifi_password", Context.MODE_PRIVATE);
+                    et_password.setText(preferences.getString(ssid, ""));
+                    alert.setView(et_password);
+                    //alert.setView(view1);
+                    alert.setPositiveButton("连接", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            IntentFilter filter = new IntentFilter(
+                                    WifiManager.NETWORK_STATE_CHANGED_ACTION);
+                            //="android.net.wifi.STATE_CHANGE"  监听wifi状态的变化
+                            registerReceiver(mReceiver, filter);
+                            String pw = et_password.getText().toString();
+                            if (null == pw || pw.length() < 8) {
+                                Toast.makeText(MainActivity.this, "密码至少8位", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString(ssid, pw);   //保存密码
+                            editor.commit();
+                            mWifiAdmin.addNetwork(mWifiAdmin.CreateWifiInfo(ssid, et_password.getText().toString(), 3));
+                        }
+                    });
+                    alert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //
+                            //mWifiAdmin.removeWifi(mWifiAdmin.getNetworkId());
+                        }
+                    });
+                    alert.create();
+                    alert.show();
+                }else{
+                    // 无密码
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("提示")
+                            .setMessage("你选择的wifi无密码，可能不安全，确定继续连接？")
+                            .setPositiveButton("确定",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,
+                                                            int whichButton) {
+                                            IntentFilter filter = new IntentFilter(
+                                                    WifiManager.NETWORK_STATE_CHANGED_ACTION);
+                                            //="android.net.wifi.STATE_CHANGE"  监听wifi状态的变化
+                                            registerReceiver(mReceiver, filter);
+                                            mWifiAdmin.addNetwork(mWifiAdmin.CreateWifiInfo(scanResult.SSID, "", 1));
+                                        }
+                                    })
+                            .setNegativeButton("取消",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,
+                                                            int whichButton) {
+                                            return;
+                                        }
+                                    }).show();
+                }
             }
 
             @Override
@@ -107,22 +180,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    private void initData() {
-        addresslist.add("www.qq.com");
-        addresslist.add("www.baidu.com");
-        addresslist.add("www.baidu.com");
-    }
-
-    private class NetPing extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            String s = "";
-            s = PingUtil.pingUrl("www.baidu.com");
-            Log.i("ping", "" + s);
-            return s;
-        }
-    }
 
     private void registerPermission(){
         //动态获取定位权限
@@ -167,4 +224,25 @@ public class MainActivity extends AppCompatActivity {
         }
         return wifiList;
     }
+
+    //监听wifi状态
+    private BroadcastReceiver mReceiver = new BroadcastReceiver (){
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo wifiInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if(wifiInfo.isConnected()){
+                WifiManager wifiManager = (WifiManager) context
+                        .getSystemService(Context.WIFI_SERVICE);
+                WifiInfo connectionInfo = wifiManager.getConnectionInfo();
+                connectionInfo.getNetworkId();
+                String wifiSSID = connectionInfo
+                        .getSSID();
+                Toast.makeText(context, wifiSSID+"连接成功", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(MainActivity.this,PingActivity.class));
+            }
+        }
+
+    };
 }

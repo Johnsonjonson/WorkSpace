@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- This is the main color -->
+    <item>
+        <shape>
+            <!--    边框颜色 -->
+            <solid android:color="#37F441"/>
+        </shape>
+    </item>
+
+</layer-list>

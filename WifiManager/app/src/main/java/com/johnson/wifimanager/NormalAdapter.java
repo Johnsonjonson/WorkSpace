@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.net.wifi.ScanResult;
 import android.os.Build;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +25,21 @@ public class NormalAdapter extends RecyclerView.Adapter<NormalAdapter.VH>{
 
     //② 创建ViewHolder
     public static class VH extends RecyclerView.ViewHolder{
-//        public final TextView parkName;
+        public final TextView wifiName;
+        public final TextView wifiMode;
+//        public final TextView wifiStatus;
         public final LinearLayout layout;
+        public final View statusView;
+        public final ImageView statusImg;
 //        public final ImageView parkToggle;
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public VH(View v) {
             super(v);
-//            parkName = (TextView) v.findViewById(R.id.park_name);
+            wifiName = (TextView) v.findViewById(R.id.wifi_name);
+            wifiMode = (TextView) v.findViewById(R.id.wifi_mode);
+//            wifiStatus = (TextView) v.findViewById(R.id.wifi_status);
+            statusView= v.findViewById(R.id.status_view);
+            statusImg= v.findViewById(R.id.img_status);
             layout = (LinearLayout) v.findViewById(R.id.layout);
 //            parkToggle = (ImageView) v.findViewById(R.id.park_toggle1);
 //            parkLayout.setBackground(v.getContext().getDrawable(R.drawable.layout_bg_normal));
@@ -48,7 +57,18 @@ public class NormalAdapter extends RecyclerView.Adapter<NormalAdapter.VH>{
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        ScanResult parkItem = mDatas.get(position);
+        ScanResult wifiItem = mDatas.get(position);
+        if(wifiItem.capabilities.contains("WEP")||wifiItem.capabilities.contains("PSK")||
+                wifiItem.capabilities.contains("EAP")){
+            holder.statusView.setBackgroundColor(context.getResources().getColor(R.color.yellow));
+            holder.wifiMode.setText("已加密");
+            holder.statusImg.setBackground(context.getResources().getDrawable(R.drawable.wifi_protected));
+        }else{
+            holder.wifiMode.setText("未加密");
+            holder.statusView.setBackgroundColor(context.getResources().getColor(R.color.green));
+            holder.statusImg.setBackground(context.getResources().getDrawable(R.drawable.wifi));
+        }
+        holder.wifiName.setText( wifiItem.SSID);
 //        holder.parkName.setText("停车位"+parkItem.getId());
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
