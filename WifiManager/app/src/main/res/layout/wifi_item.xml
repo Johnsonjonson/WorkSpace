@@ -16,7 +16,7 @@
             android:layout_height="20dp"/>
 
         <TextView
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_margin="10dp"
             android:id="@+id/wifi_name"
             android:textColor="@color/black"
@@ -37,10 +37,12 @@
             android:layout_margin="10dp"
             android:id="@+id/wifi_mode"
             android:textColor="@color/black"
+            android:gravity="right"
             android:text="测试"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <ImageView
+            android:layout_weight="0"
             android:layout_margin="10dp"
             android:gravity="right"
             android:id="@+id/img_status"

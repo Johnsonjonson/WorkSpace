@@ -68,7 +68,7 @@ public class NormalAdapter extends RecyclerView.Adapter<NormalAdapter.VH>{
             holder.statusView.setBackgroundColor(context.getResources().getColor(R.color.green));
             holder.statusImg.setBackground(context.getResources().getDrawable(R.drawable.wifi));
         }
-        holder.wifiName.setText( wifiItem.SSID);
+        holder.wifiName.setText(wifiItem.SSID);
 //        holder.parkName.setText("停车位"+parkItem.getId());
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
