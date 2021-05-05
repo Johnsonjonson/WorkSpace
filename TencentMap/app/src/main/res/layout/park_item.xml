@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="4dp"
+    android:padding="10dp"
+    android:id="@+id/park_layout_1"
+    android:background="@drawable/layout_bg"
+    android:gravity="center"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/park_toggle1"
+        android:textOn=""
+        android:textOff=""
+        android:background="@drawable/park_kongxian_02e4f1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
+    <TextView
+        android:id="@+id/park_name"
+        android:gravity="center"
+        android:text="停车位1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

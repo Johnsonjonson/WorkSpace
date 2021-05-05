@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">配送信息</string>
+<!--    <string name="sdk_key">TDVBZ-YVYKV-OTAPS-UDZ7V-QRKS5-AWB4M</string>-->
+    <string name="sdk_key">YDRBZ-4GL6F-MGCJL-JGIUE-575RV-OIBYS</string>
+</resources>

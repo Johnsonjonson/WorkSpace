@@ -50,7 +50,7 @@ public class FragmentSendMsg extends BasFragment {
             case R.id.send_a:
                 toast("A按钮被点击");
 //                setSendData();
-                sendData(new FragmentMessageItem(true, Analysis.getBytes("a", true), null, true, module, false));
+                sendData(new FragmentMessageItem(true, Analysis.getBytes("1", true), null, true, module, false));
                 break;
             case R.id.send_b:
                 toast("B 按钮被点击");

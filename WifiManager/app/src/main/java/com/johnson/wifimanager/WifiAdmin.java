@@ -1,5 +1,6 @@
 package com.johnson.wifimanager;
 
+import java.sql.Time;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -12,6 +13,7 @@ import android.net.wifi.WifiManager.WifiLock;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Timer;
 
 public class WifiAdmin {
     // 定义WifiManager对象   
@@ -171,10 +173,27 @@ public class WifiAdmin {
 
     // 添加一个网络并连接   
     public void addNetwork(WifiConfiguration wcg) {
-        int wcgID = mWifiManager.addNetwork(wcg);
-        boolean b =  mWifiManager.enableNetwork(wcgID, true);
-        System.out.println("a--" + wcgID);
-        System.out.println("b--" + b);
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        int netId = mWifiManager.addNetwork(wcg);
+//        if(netId ==-1){
+//            List<WifiConfiguration> configuredNetworks = mWifiManager.getConfiguredNetworks();
+//            for (WifiConfiguration configuredNetwork : configuredNetworks) {
+//                if(configuredNetwork.SSID.replace("\"","") == wcg.SSID.replace("\"","")){
+//                    netId = configuredNetwork.networkId;
+//                }
+//
+//            }
+//        }
+        //        if (netId == -1) netId = mWifiManager.configuredNetworks?.let {
+//            it.firstOrNull { it.SSID.trim('"') == ssid.trim('"') }?.networkId ?: -1
+//        }
+        boolean b =  mWifiManager.enableNetwork(netId, true);
+        System.out.println("net did = " + netId);
+        System.out.println("b-===-" + b);
     }
 
     // 断开指定ID的网络   
@@ -187,26 +206,101 @@ public class WifiAdmin {
         mWifiManager.removeNetwork(netId);
     }
 
+
+    public WifiConfiguration CreateWifiInfo1(ScanResult scan,String Password,int Type){
+        WifiConfiguration config = new WifiConfiguration();
+        config.hiddenSSID = false;
+        config.SSID = "\"" + scan.SSID + "\"";
+        config.status = WifiConfiguration.Status.ENABLED;
+		/*if (scan.capabilities.contains("WEP")) {
+			config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+			config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+			config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+			config.SSID = "\"" + scan.SSID + "\"";
+			config.wepTxKeyIndex = 0;
+			config.wepKeys[0] = Password;
+		} else */if (scan.capabilities.contains("WPA")) {
+
+            config.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+            config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+            config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+            config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+
+            config.preSharedKey = "\"".concat(Password).concat("\"");
+//			config.SSID = "\"" + scan.SSID + "\"";
+
+//			config.preSharedKey = "\"" + Password + "\"";
+        } else if (scan.capabilities.contains("WEP")) {
+
+            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            config.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+            config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+            config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+            config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
+            config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+            config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+
+            if (!Password.isEmpty()) config.wepKeys[0] = Password;
+            else config.wepKeys[0] = "\"".concat(Password).concat("\"");
+            config.wepTxKeyIndex = 0;
+
+//			config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_EAP);
+//			config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+//			config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+//			config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+//			config.SSID = "\"" + scan.SSID + "\"";
+//			config.preSharedKey = "\"" + Password + "\"";
+        } else {
+//			config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+//			config.SSID = "\"" + scan.SSID + "\"";
+            config.preSharedKey = null;
+            config.wepKeys[0] = "\"" + "\"";
+            config.wepTxKeyIndex = 0;
+            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            config.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+            config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+            config.allowedAuthAlgorithms.clear();
+            config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+            config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+        }
+        return config;
+
+    }
+
 //然后是一个实际应用方法，只验证过没有密码的情况： 
 
     public WifiConfiguration CreateWifiInfo(String SSID, String Password, int Type)
     {
         WifiConfiguration config = new WifiConfiguration();
-        config.allowedAuthAlgorithms.clear();
-        config.allowedGroupCiphers.clear();
-        config.allowedKeyManagement.clear();
-        config.allowedPairwiseCiphers.clear();
-        config.allowedProtocols.clear();
-        config.SSID = "\"" + SSID + "\"";
-
-        WifiConfiguration tempConfig = this.IsExsits(SSID);
-        if(tempConfig != null) {
-            mWifiManager.removeNetwork(tempConfig.networkId);
-        }
+//        config.allowedAuthAlgorithms.clear();
+//        config.allowedGroupCiphers.clear();
+//        config.allowedKeyManagement.clear();
+//        config.allowedPairwiseCiphers.clear();
+//        config.allowedProtocols.clear();
+//        config.SSID = "\"" + SSID + "\"";
+//        config.SSID = SSID ;
+//        mWifiManager.setWifiEnabled(true);
+//        WifiConfiguration tempConfig = this.IsExsits(SSID);
+//        if(tempConfig != null) {
+//            mWifiManager.removeNetwork(tempConfig.networkId);
+//        }
 
         if(Type == 1) //WIFICIPHER_NOPASS
         {
-            config.wepKeys[0] = "";
+            config.SSID = SSID;
+//            config.hiddenSSID = true;
+            config.wepKeys[0] =  "";
             config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             config.wepTxKeyIndex = 0;
         }
@@ -214,6 +308,7 @@ public class WifiAdmin {
         {
             config.hiddenSSID = true;
             config.wepKeys[0]= "\""+Password+"\"";
+//            config.wepKeys[0]= Password;
             config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
@@ -225,6 +320,7 @@ public class WifiAdmin {
         if(Type == 3) //WIFICIPHER_WPA
         {
             config.preSharedKey = "\""+Password+"\"";
+//            config.preSharedKey = Password;
             config.hiddenSSID = true;
             config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
@@ -233,6 +329,8 @@ public class WifiAdmin {
             //config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
             config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+            config.allowedProtocols.set(WifiConfiguration.Protocol.RSN);//For WPA2
+            config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);//For WPA
             config.status = WifiConfiguration.Status.ENABLED;
         }
         return config;

@@ -44,7 +44,7 @@ public class PingActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter(
                 WifiManager.NETWORK_STATE_CHANGED_ACTION);
         //="android.net.wifi.STATE_CHANGE"  监听wifi状态的变化
-        registerReceiver(mReceiver, filter);
+//        registerReceiver(mReceiver, filter);
 
         initDialog();
     }

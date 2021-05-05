@@ -27,9 +27,10 @@ import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.net.wifi.WifiNetworkSpecifier;
+//import android.net.wifi.WifiNetworkSpecifier;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,14 +39,25 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TableRow;
 import android.widget.Toast;
+
+
+import com.hacknife.wifimanager.IWifi;
+import com.hacknife.wifimanager.IWifiManager;
+import com.hacknife.wifimanager.MyWifiManager;
+import com.hacknife.wifimanager.OnWifiChangeListener;
+import com.hacknife.wifimanager.OnWifiConnectListener;
+import com.hacknife.wifimanager.OnWifiStateChangeListener;
+import com.hacknife.wifimanager.State;
+import com.hacknife.wifimanager.Wifi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnWifiChangeListener, OnWifiConnectListener, OnWifiStateChangeListener {
     private static final String TAG = "Johnson";
 
     private List<ScanResult> wifiList = new ArrayList<>();
@@ -53,16 +65,47 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private NormalAdapter mAdapter;
     protected WifiAdmin mWifiAdmin;
+    protected WifiUtils mWifiUtils;
+    private IWifiManager iWifiManager;
+    private Context mContext;
+    private MyWifiManager myWifiManager;
+    private String currentWifiConnectSSID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//        connectEncryptWifi(IWifi wifi, String password)
+        mContext = this;
+        initWifiManager();
         mWifiAdmin = new WifiAdmin(MainActivity.this);
+        mWifiUtils = new WifiUtils(MainActivity.this);
         initRecyclerView();
         registerPermission();
     }
+
+    private void initWifiManager() {
+        myWifiManager = new MyWifiManager(this);
+        myWifiManager.setOnWifiChangeListener(this);
+        myWifiManager.setOnWifiConnectListener(this);
+        myWifiManager.setOnWifiStateChangeListener(this);
+    }
+
+//    public boolean isRegiester(){
+//        Intent intent = new Intent();
+//        IntentFilter filter = new IntentFilter(
+//                WifiManager.NETWORK_STATE_CHANGED_ACTION);
+//        intent.setAction("com.xxx.powersaving.INSTALLAPP");
+//        intent.putExtra("path", apkPath);
+//        PackageManager pm = context.getPackageManager();
+//        List<ResolveInfo> resolveInfos = pm.queryBroadcastReceivers(intent, 0);
+//        if(resolveInfos != null && !resolveInfos.isEmpty()){
+//            //查询到相应的BroadcastReceiver
+//        }
+//        return fale
+//    }
+
+
 
     @SuppressLint("WrongConstant")
     private void initRecyclerView() {
@@ -81,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onItemClick(View view, int position) {
+//                MainActivity.this.unregisterReceiver(mReceiver);
 //                selectedIndex = position+1;
 //                updateSelect(position);
                 ScanResult scanResult = wifiList.get(position);
@@ -104,6 +148,14 @@ public class MainActivity extends AppCompatActivity {
                     // 无密码
                     capabilities = "";
                 }
+                WifiManager wifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+                WifiInfo connectionInfo = wifiManager.getConnectionInfo();
+                connectionInfo.getNetworkId();
+                String wifiSSID = connectionInfo
+                        .getSSID();
+                int ipAddress = connectionInfo.getIpAddress();
+                @SuppressLint("MissingPermission") List<WifiConfiguration> configuredNetworks = wifiManager.getConfiguredNetworks();
+
 
                 if (!capabilities.equals("")) {
 
@@ -117,9 +169,11 @@ public class MainActivity extends AppCompatActivity {
                     et_password.setText(preferences.getString(ssid, ""));
                     alert.setView(et_password);
                     //alert.setView(view1);
+
                     alert.setPositiveButton("连接", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            currentWifiConnectSSID = scanResult.SSID;
                             IntentFilter filter = new IntentFilter(
                                     WifiManager.NETWORK_STATE_CHANGED_ACTION);
                             //="android.net.wifi.STATE_CHANGE"  监听wifi状态的变化
@@ -132,7 +186,14 @@ public class MainActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = preferences.edit();
                             editor.putString(ssid, pw);   //保存密码
                             editor.commit();
-                            mWifiAdmin.addNetwork(mWifiAdmin.CreateWifiInfo(ssid, et_password.getText().toString(), 3));
+//                            mWifiAdmin.addNetwork(mWifiAdmin.CreateWifiInfo1(scanResult, et_password.getText().toString(), 3));
+//                            mWifiAdmin.addNetwork(mWifiAdmin.CreateWifiInfo(ssid, et_password.getText().toString(), 3));
+                            mWifiUtils.openWifi();
+//                            mWifiUtils.addNetwork(mWifiUtils.createWifiInfo(ssid, et_password.getText().toString(), WifiUtils.WifiCipherType.WIFICIPHER_WPA),ssid);
+                            mWifiUtils.addNetwork(mWifiUtils.createWifiInfo(ssid, et_password.getText().toString(), WifiUtils.WifiCipherType.WIFICIPHER_WPA),ssid);
+//                            ScanResult result, List<WifiConfiguration > configurations, String connectedSSID, int ipAddress
+
+//                            myWifiManager.connectEncryptWifi(Wifi.create(scanResult, configuredNetworks, wifiSSID, ipAddress),et_password.getText().toString());
                         }
                     });
                     alert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -153,11 +214,19 @@ public class MainActivity extends AppCompatActivity {
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog,
                                                             int whichButton) {
+                                            currentWifiConnectSSID = scanResult.SSID;
                                             IntentFilter filter = new IntentFilter(
                                                     WifiManager.NETWORK_STATE_CHANGED_ACTION);
                                             //="android.net.wifi.STATE_CHANGE"  监听wifi状态的变化
                                             registerReceiver(mReceiver, filter);
-                                            mWifiAdmin.addNetwork(mWifiAdmin.CreateWifiInfo(scanResult.SSID, "", 1));
+
+//                                            mWifiUtils.openWifi();
+//                                            mWifiAdmin.addNetwork(mWifiAdmin.CreateWifiInfo(scanResult.SSID, "", 1));
+//                                            mWifiUtils.addNetwork(mWifiUtils.createWifiInfo(scanResult.SSID, "", WifiUtils.WifiCipherType.WIFICIPHER_NOPASS));
+//                                            myWifiManager.connectOpenWifi(Wifi.create(scanResult, configuredNetworks, wifiSSID, ipAddress));
+                                            mWifiUtils.openWifi();
+//                                            mWifiUtils.addNetwork(mWifiUtils.createWifiInfo(scanResult.SSID, "", WifiUtils.WifiCipherType.WIFICIPHER_NOPASS),scanResult.SSID);
+                                            mWifiUtils.addNetwork(mWifiUtils.createWifiInfo(scanResult.SSID, "", WifiUtils.WifiCipherType.WIFICIPHER_NOPASS),scanResult.SSID);
                                         }
                                     })
                             .setNegativeButton("取消",
@@ -205,8 +274,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public List<ScanResult> getWifiList() {
+        wifiList.clear();
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         List<ScanResult> scanWifiList = wifiManager.getScanResults();
+        if (scanWifiList == null) {
+            if(wifiManager.getWifiState()==3){
+                Toast.makeText(this,"当前区域没有无线网络",Toast.LENGTH_SHORT).show();
+            }else if(wifiManager.getWifiState()==2){
+                Toast.makeText(this,"wifi正在开启，请稍后扫描", Toast.LENGTH_SHORT).show();
+            }else{Toast.makeText(this,"WiFi没有开启", Toast.LENGTH_SHORT).show();
+            }
+        }
         if (scanWifiList != null && scanWifiList.size() > 0) {
             HashMap<String, Integer> signalStrength = new HashMap<String, Integer>();
             for (int i = 0; i < scanWifiList.size(); i++) {
@@ -241,10 +319,32 @@ public class MainActivity extends AppCompatActivity {
                 connectionInfo.getNetworkId();
                 String wifiSSID = connectionInfo
                         .getSSID();
-                Toast.makeText(context, wifiSSID+"连接成功", Toast.LENGTH_LONG).show();
+//                if(wifiSSID.equals(currentWifiConnectSSID)){
+//                    return;
+//                }
+//                Toast.makeText(context, wifiSSID+"连接成功", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(MainActivity.this,PingActivity.class));
             }
         }
 
     };
+
+    public void onRefreshClick(View view) {
+        getWifiList();
+    }
+
+    @Override
+    public void onWifiChanged(List<IWifi> wifis) {
+
+    }
+
+    @Override
+    public void onConnectChanged(boolean status) {
+        Log.d(TAG,"连接状态"+status);
+    }
+
+    @Override
+    public void onStateChanged(State state) {
+
+    }
 }

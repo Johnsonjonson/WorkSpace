@@ -32,14 +32,14 @@ public class MainActivity extends AppCompatActivity {
 
     private MapView mapView;
     private TencentMap map;
-
+    private int index;
     private LocationService locationService;
     private Timer timer;
     private Marker marker;
     private Button button;
     private LatLng latlng;
-    private Button buttonYuyue;
-    private boolean isBooked = false;
+    private Button buttonPark;
+    private boolean isBooked = true;
 
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -49,33 +49,19 @@ public class MainActivity extends AppCompatActivity {
         locationService = retrofit.create(LocationService.class);
     }
 
-    private void log(String message) {
-        Log.i(MainActivity.class.getName(), message);
-    }
-
-    private void updateLocation(Location location) {
-        log("updateLocation: " + location);
-        if (marker != null && location.getLat() != 0 && location.getLng() != 0 && location.getLat() >= -90 && location.getLat() <= 90 && location.getLng() >= -180 && location.getLng() <= 180) {
-            synchronized (marker) {
-                marker.setVisible(true);
-                latlng = new LatLng(location.getLat(), location.getLng());
-                marker.setPosition(latlng);
-                map.moveCamera(CameraUpdateFactory.newLatLng(latlng));
-            }
-        }
-    }
-
-    public static boolean isInstalled() {
-        return new File("/data/data/com.tencent.map").exists();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        index = 0;
+        Intent intent=getIntent();
+        Bundle bundle=intent.getBundleExtra("data");
+        if (bundle!=null) {
+            index = bundle.getInt("index");
+        }
         mapView = this.findViewById(R.id.mapview);
         button = this.findViewById(R.id.button);
-        buttonYuyue = this.findViewById(R.id.button1);
+        buttonPark = this.findViewById(R.id.button1);
         map = mapView.getMap();
         map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setIndoorLevelPickerEnabled(true);
@@ -103,20 +89,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         button.setEnabled(isBooked);
-        buttonYuyue.setOnClickListener(new View.OnClickListener() {
+        buttonPark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isBooked = !isBooked;
-                button.setEnabled(isBooked);
-                String yuyuestr = "预约";
-                String toastStr = "预约成功，点击导航可开始导航";
-                if (isBooked){
-                    yuyuestr = "取消";
-                }else{
-                    toastStr = "取消成功，点击预约可预约停车";
-                }
-                buttonYuyue.setText(yuyuestr);
-                Toast.makeText(MainActivity.this, toastStr, Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putInt("index", index);
+                Intent intent = new Intent(MainActivity.this, ParkDetailActivity.class);
+                intent.putExtra("data", bundle);
+                startActivity(intent);
             }
         });
     }
@@ -177,4 +157,24 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         mapView.onRestart();
     }
+    private void log(String message) {
+        Log.i(MainActivity.class.getName(), message);
+    }
+
+    private void updateLocation(Location location) {
+        log("updateLocation: " + location);
+        if (marker != null && location.getLat() != 0 && location.getLng() != 0 && location.getLat() >= -90 && location.getLat() <= 90 && location.getLng() >= -180 && location.getLng() <= 180) {
+            synchronized (marker) {
+                marker.setVisible(true);
+                latlng = new LatLng(location.getLat(), location.getLng());
+                marker.setPosition(latlng);
+                map.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+            }
+        }
+    }
+
+    public static boolean isInstalled() {
+        return new File("/data/data/com.tencent.map").exists();
+    }
+
 }

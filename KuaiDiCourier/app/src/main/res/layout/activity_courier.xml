@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CourierActivity">
+<LinearLayout
+    android:gravity="center"
+    android:id="@+id/layout_start"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:text="查看流水"
+        android:id="@+id/btn_recorders"
+        android:onClick="onRecordersClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="打开柜门并录入信息"
+        android:id="@+id/btn_courier_open"
+        android:onClick="onOpenClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:text="确认发货"
+        android:id="@+id/btn_fahuo"
+        android:onClick="onFaHuonClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:text="确认送达"
+        android:id="@+id/btn_arrive"
+        android:onClick="onArriveClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:textColor="@color/red"
+        android:id="@+id/tv_courier_tips"
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ParkDetailActivity">
+
+    <LinearLayout
+        android:layout_weight="0"
+        android:layout_margin="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <View
+                android:background="#02e4f1"
+                android:layout_width="40dp"
+                android:layout_height="20dp"/>
+            <TextView
+                android:id="@+id/tv_kongxian"
+                android:textColor="#02e4f1"
+                android:text="空闲10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <View
+                android:background="#cdcdcd"
+                android:layout_width="40dp"
+                android:layout_height="20dp"/>
+            <TextView
+                android:id="@+id/tv_zhanyong"
+                android:textColor="#cdcdcd"
+                android:text="已占用0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+<!--        <LinearLayout-->
+
+<!--            android:gravity="right"-->
+<!--            android:layout_weight="1"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+<!--            <View-->
+<!--                android:background="#e0620d"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="20dp"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/tv_yuyue"-->
+<!--                android:textColor="#e0620d"-->
+<!--                android:text="预约中0"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--        </LinearLayout>-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="0"
+        android:layout_margin="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <FrameLayout
+            android:onClick="onParkClick"
+            android:id="@+id/frame_park"
+            android:background="#02e4f1"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:onClick="onParkClick"
+                android:id="@+id/btn_park"
+                android:background="#02e4f1"
+                android:backgroundTint="#02e4f1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"/>
+            <TextView
+                android:id="@+id/tv_park"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                android:textColor="#ffffff"
+                android:text="预约"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

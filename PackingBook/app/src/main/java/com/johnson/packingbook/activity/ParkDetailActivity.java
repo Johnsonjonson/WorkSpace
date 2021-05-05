@@ -539,6 +539,7 @@ public class ParkDetailActivity extends AppCompatActivity {
                 .baseUrl("http://129.204.232.210:8535/").build();
         APIService apiService = retrofit.create(APIService.class);
         Call<String> takeCarCall = apiService.takeCar(id, packID);
+//        takeCarCall.execute();
         takeCarCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
