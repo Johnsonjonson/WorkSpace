@@ -40,6 +40,8 @@ public class CourierActivity extends AppCompatActivity {
     private Button btnFahuo;
     private Button btnArrive;
     private AlertDialog backDialog;
+    private Button btnFee;
+    private Button btnCourierClose;
 
     {
         timer = new Timer(true);
@@ -59,6 +61,8 @@ public class CourierActivity extends AppCompatActivity {
     private void initView() {
         btnRecorders = findViewById(R.id.btn_recorders);
         btnCourierOpen = findViewById(R.id.btn_courier_open);
+        btnCourierClose = findViewById(R.id.btn_courier_close);
+        btnFee = findViewById(R.id.btn_fee);
         btnFahuo = findViewById(R.id.btn_fahuo);
         btnArrive = findViewById(R.id.btn_arrive);
         tvTips = findViewById(R.id.tv_courier_tips);
@@ -66,7 +70,7 @@ public class CourierActivity extends AppCompatActivity {
         tvTips.setVisibility(View.INVISIBLE);
         btnCourierOpen.setEnabled(false);
         btnRecorders.setClickable(false);
-        layoutStart.setVisibility(View.GONE);
+        layoutStart.setVisibility(View.VISIBLE);
         btnFahuo.setVisibility(View.GONE);
         btnArrive.setVisibility(View.GONE);
     }
@@ -115,12 +119,22 @@ public class CourierActivity extends AppCompatActivity {
         apiCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                openWeightFeeDialog();
+//                openWeightFeeDialog();
+                if (i==1) {
+                    Toast.makeText(CourierActivity.this, "打开柜门成功", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(CourierActivity.this, "关闭柜门成功", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(CourierActivity.this, "打开柜门失败，请重试", Toast.LENGTH_SHORT).show();
+                if (i==1) {
+                    Toast.makeText(CourierActivity.this, "打开柜门失败，请重试", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(CourierActivity.this, "关闭柜门失败，请重试", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -179,10 +193,6 @@ public class CourierActivity extends AppCompatActivity {
                         }else{
                             Toast.makeText(CourierActivity.this, "设置重量和费用信息失败，请重试", Toast.LENGTH_SHORT).show();
                         }
-//                        int status = jsParam.optInt("status", 0);
-//                        Gson gson  = new Gson();
-//                        curExpressInfo = gson.fromJson(body, Express.class);
-//                        updateView(status);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -231,34 +241,32 @@ public class CourierActivity extends AppCompatActivity {
     private void updateView(int status) {
         btnFahuo.setVisibility(View.GONE);
         btnArrive.setVisibility(View.GONE);
+        btnCourierOpen.setEnabled(false);
+        btnCourierOpen.setClickable(false);
+        btnFee.setEnabled(false);
+        btnFee.setClickable(false);
         switch (status){
             case 0:
             case 7: //结束
-                layoutStart.setVisibility(View.VISIBLE);
                 tvTips.setVisibility(View.VISIBLE);
-                btnCourierOpen.setEnabled(false);
-                btnCourierOpen.setClickable(false);
                 tvTips.setText("暂无快递");
                 break;
             case 1:   //正在设置费用
-                layoutStart.setVisibility(View.VISIBLE);
                 btnCourierOpen.setEnabled(true);
                 btnCourierOpen.setClickable(true);
+                btnFee.setEnabled(true);
+                btnFee.setClickable(true);
 //                btnC
                 tvTips.setVisibility(View.VISIBLE);
                 tvTips.setText("有新的快递，请录入重量和价格");
                 break;
             case 2:  //已设置设置费用
-                layoutStart.setVisibility(View.VISIBLE);
                 tvTips.setVisibility(View.VISIBLE);
                 tvTips.setText("已设置重量和费用信息，等待用户支付");
-                btnCourierOpen.setEnabled(false);
-                btnCourierOpen.setClickable(false);
-//                updateCreateView();
                 break;
             case 3:  //已付款
                 btnFahuo.setVisibility(View.VISIBLE);
-                tvTips.setText("用户已付款，请发货");
+                tvTips.setText("用户已付款，请开始配送");
                 break;
             case 4: //拒绝下单
                 tvTips.setText("用户拒绝下单，将物品放置快递柜");
@@ -272,10 +280,7 @@ public class CourierActivity extends AppCompatActivity {
                 tvTips.setText("快递已送达，等待用户确认收货");
                 break;
             case 8: ///已退还快递
-                layoutStart.setVisibility(View.VISIBLE);
                 tvTips.setVisibility(View.VISIBLE);
-                btnCourierOpen.setEnabled(false);
-                btnCourierOpen.setClickable(false);
                 tvTips.setText("快递已退还，等待用户取货");
                 break;
         }
@@ -357,5 +362,15 @@ public class CourierActivity extends AppCompatActivity {
 
     public void onArriveClick(View view) {
         updateExpressStatus(6,"确认送达");
+    }
+
+    //关闭柜门
+    public void onCloseClick(View view) {
+        openOrCloseDoor(0);
+    }
+
+    // 录入费用
+    public void onFeeClick(View view) {
+        openWeightFeeDialog();
     }
 }

@@ -45,5 +45,8 @@ public interface APIService {
      */
     @POST("update_status?")
     Call<String> updateStatus(@Query("id") int id,@Query("status") int status);
+
+    @POST("update?")
+    Call<String> updateDoor(@Query("isOpen") int i);
 }
 

@@ -20,13 +20,25 @@
         android:layout_height="wrap_content"/>
 
     <Button
-        android:text="打开柜门并录入信息"
+        android:text="打开柜门"
         android:id="@+id/btn_courier_open"
         android:onClick="onOpenClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <Button
-        android:text="确认发货"
+        android:text="关闭柜门"
+        android:id="@+id/btn_courier_close"
+        android:onClick="onCloseClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:text="录入费用信息"
+        android:id="@+id/btn_fee"
+        android:onClick="onFeeClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:text="确认配送"
         android:id="@+id/btn_fahuo"
         android:onClick="onFaHuonClick"
         android:layout_width="wrap_content"

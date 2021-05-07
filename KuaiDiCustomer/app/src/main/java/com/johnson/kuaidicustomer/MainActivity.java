@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private APIService apiService;
     private Button btnTake;
+    private Button btnReceive;
+    private Button btnSubmit;
 
     {
         timer = new Timer(true);
@@ -105,13 +107,18 @@ public class MainActivity extends AppCompatActivity {
         btnOpen = findViewById(R.id.btn_open);
         btnClose = findViewById(R.id.btn_close);
         btnTake = findViewById(R.id.btn_take);
+        btnReceive = findViewById(R.id.btn_Receive);
+        btnSubmit = findViewById(R.id.btn_submit);
         tvTips = findViewById(R.id.tv_tips);
         layoutCreate = findViewById(R.id.layout_create);
-        btnTake.setVisibility(View.GONE);
         layoutWeightInfo = findViewById(R.id.layout_weight_info);
         tvWeight = findViewById(R.id.tv_weight);
         tvFee = findViewById(R.id.tv_fee);
         tvTips.setVisibility(View.INVISIBLE);
+
+        btnTake.setVisibility(View.GONE);
+        btnReceive.setVisibility(View.GONE);
+        btnSubmit.setVisibility(View.GONE);
 
         layoutCreate.setVisibility(View.GONE);
         layoutWeightInfo.setVisibility(View.GONE);
@@ -119,9 +126,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onOpenDoor(View view) {
+        openOrCloseDoor (1,"打开柜门");
     }
 
-    public void onCloseDoor(View view) {
+    public void onSubmitinfo(View view) {
         String etStartText = etStart.getText().toString();
         String etEndText = etEnd.getText().toString();
         String etPhoneText = etPhone.getText().toString();
@@ -159,13 +167,13 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsParam = new JSONObject(body);
                     int errorno = jsParam.optInt("errorno", 0);
                     if (errorno == 0) {
-                        //预约失败
+                        //提交信息失败
                         Toast.makeText(MainActivity.this, "提交失败，请重试", Toast.LENGTH_SHORT).show();
                         btnClose.setEnabled(true);
                         tvTips.setVisibility(View.VISIBLE);
                         tvTips.setText("提交失败，请重试");
                     } else {
-                        //预约成功
+                        //创建订单成功
                         Toast.makeText(MainActivity.this, "信息已提交成功，等待快递员录入价格", Toast.LENGTH_SHORT).show();
                         btnClose.setEnabled(false);
                         btnClose.setClickable(false);
@@ -180,9 +188,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Log.d("Johnson", "=======提交信息成功==onFailure=========2");
-                Toast.makeText(MainActivity.this, "提交信息成功，等待快递员录入价格", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "提交信息失败，请重试", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void onCloseDoor(View view) {
+        openOrCloseDoor (0,"提交信息");
+    }
+
+    private void openOrCloseDoor(int i,String order) {
+        Call<String> apiCall = apiService.updateDoor(i);
+        apiCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+//                openWeightFeeDialog();
+                if (i==1) {
+                    Toast.makeText(MainActivity.this, "打开柜门成功", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "关闭柜门成功", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                if (i==1) {
+                    Toast.makeText(MainActivity.this, "打开柜门失败，请重试", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "关闭柜门失败，请重试", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     private void requestExpressInfo() {
@@ -214,14 +252,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateView(int status) {
+        btnReceive.setVisibility(View.GONE);
+        btnTake.setVisibility(View.GONE);
+        btnSubmit.setVisibility(View.GONE);
+        btnClose.setClickable(true);
+        btnClose.setEnabled(true);
         switch (status){
             case 0:
             case 7: //结束
+                btnSubmit.setVisibility(View.VISIBLE);
                 layoutCreate.setVisibility(View.VISIBLE);
                 layoutWeightInfo.setVisibility(View.GONE);
                 btnTake.setVisibility(View.GONE);
-                btnClose.setClickable(true);
-                btnClose.setEnabled(true);
                 btnOpen.setClickable(true);
                 btnOpen.setEnabled(true);
                 tvTips.setText("");
@@ -240,16 +282,24 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4:  //拒绝下单
                 updateCreateView();
-                btnTake.setVisibility(View.VISIBLE);
                 tvTips.setText("您已拒绝下单，等待快递员放置快递");
                 break;
             case 5: //开始配送
+                updateCreateView();
+                tvTips.setText("快递已开始配送，等待快递送达");
                 break;
             case 6: //确认送达
+                updateCreateView();
+                btnOpen.setClickable(true);
+                btnOpen.setEnabled(true);
+                btnReceive.setVisibility(View.VISIBLE);
+                tvTips.setText("快递已送达，请确认收货");
                 break;
             case 8:  //已退还快递
-                btnOpen.setClickable(false);
-                btnOpen.setEnabled(false);
+                updateCreateView();
+                btnOpen.setClickable(true);
+                btnOpen.setEnabled(true);
+                btnTake.setVisibility(View.VISIBLE);
                 tvTips.setText("快递已退还，请取走快递");
                 break;
         }
@@ -274,8 +324,6 @@ public class MainActivity extends AppCompatActivity {
         }
         layoutWeightInfo.setVisibility(View.GONE);
         layoutCreate.setVisibility(View.VISIBLE);
-        btnClose.setEnabled(false);
-        btnClose.setClickable(false);
         btnOpen.setClickable(false);
         btnOpen.setEnabled(false);
         btnTake.setVisibility(View.GONE);
@@ -312,6 +360,17 @@ public class MainActivity extends AppCompatActivity {
         updateExpressStatus(4,"拒绝下单");
     }
 
+
+    public void onTakeExpress(View view) {
+        updateExpressStatus(7,"取走快递");
+//        openOrCloseDoor(0,"取走快递");
+    }
+
+    public void onReceiveExpress(View view) {
+        updateExpressStatus(7,"确认收货");
+//        openOrCloseDoor(0,"确认收货");
+    }
+
     public void updateExpressStatus(int status,String order){
         if(curExpressInfo != null) {
             int id = curExpressInfo.getId();
@@ -331,12 +390,20 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "已拒绝下单，可重新填写寄件信息", Toast.LENGTH_SHORT).show();
                             }else if(order == "支付") {
                                 Toast.makeText(MainActivity.this, "支付成功，等待配送", Toast.LENGTH_SHORT).show();
+                            }else if(order == "取走快递") {
+                                Toast.makeText(MainActivity.this, "快递已取，结束配送", Toast.LENGTH_SHORT).show();
+                            }else if(order == "确认收货") {
+                                Toast.makeText(MainActivity.this, "确认收货成功，订单已完成", Toast.LENGTH_SHORT).show();
                             }
                         }else{
                             if (order == "拒绝下单") {
                                 Toast.makeText(MainActivity.this, "拒绝下单失败，请重试", Toast.LENGTH_SHORT).show();
                             }else if(order == "支付") {
                                 Toast.makeText(MainActivity.this, "支付失败，请重试", Toast.LENGTH_SHORT).show();
+                            }else if(order == "取走快递") {
+                                Toast.makeText(MainActivity.this, "更新状态失败，请重试", Toast.LENGTH_SHORT).show();
+                            }else if(order == "确认收货") {
+                                Toast.makeText(MainActivity.this, "确认收货失败，请重试", Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -352,10 +419,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    public void onTakeExpress(View view) {
-
-
     }
 }

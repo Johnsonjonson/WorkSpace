@@ -59,6 +59,36 @@ class CreateExpress(MethodView):
     def post(self):
         return self.get()
 
+class AllExpress(MethodView):
+    def get(self):
+        result = []
+        try:
+            createDB = connect()
+            mycursor = createDB.cursor()
+            sql = "select * from t_express order by id desc"
+            mycursor.execute(sql)
+            results = mycursor.fetchall()
+            for last in results:
+                temp = {}
+                temp['errorno'] = 1
+                temp['id'] = int(last[0])
+                temp['start'] = str(last[1])
+                temp['end'] = str(last[2])
+                temp['phone'] = str(last[3])
+                temp['name'] = str(last[4])
+                temp['status'] = int(last[5] or 0)
+                temp['weight'] = int(last[6] or 0)
+                temp['fee'] = int(last[7] or 0)
+                temp['time'] = str(last[8])
+                result.append(temp)
+        # result = queryUser(id)
+        except Exception as e:
+            print('报错：', str(e))
+        createDB.close()
+        return flask.jsonify(result)
+
+    def post(self):
+        return self.get()
 
 class LastExpress(MethodView):
     def get(self):
@@ -183,6 +213,7 @@ class GetDoorStatus(MethodView):
 if __name__ == '__main__':
     app.add_url_rule('/create', view_func=CreateExpress.as_view('create'))  # 创建
     app.add_url_rule('/last', view_func=LastExpress.as_view('last'))  # 创建
+    app.add_url_rule('/all', view_func=AllExpress.as_view('all'))  # 所有订单
     app.add_url_rule('/weight_fee', view_func=UpdateWeightAndFee.as_view('weight_fee'))  # 设置重量和费用
     app.add_url_rule('/pay', view_func=Pay.as_view('pay'))  # z支付
     app.add_url_rule('/update_status', view_func=UpdateStatus.as_view('update_status'))  # 更新快递状态
