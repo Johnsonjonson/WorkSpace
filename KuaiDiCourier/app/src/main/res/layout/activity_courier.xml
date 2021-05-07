@@ -5,13 +5,86 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".CourierActivity">
+    <TableLayout
+        android:layout_marginBottom="20dp"
+        android:id="@+id/layout_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:divider="@drawable/line_h"
+        android:showDividers="beginning|middle|end"
+        android:orientation="vertical">
+
+        <TableRow
+            android:divider="@drawable/line_h"
+            android:showDividers="beginning|middle|end"
+            android:orientation="horizontal">
+            <TextView
+                android:padding="8dp"
+                android:layout_width="1dp"
+                android:text="起点"
+                android:gravity="center"/>
+            <TextView
+                android:padding="8dp"
+                android:layout_width="1dp"
+                android:id="@+id/tv_start"
+                android:text="标题一"
+                android:gravity="center"/>
+        </TableRow>
+        <TableRow
+            android:divider="@drawable/line_h"
+            android:showDividers="beginning|middle|end">
+            <TextView
+                android:padding="8dp"
+                android:layout_width="1dp"
+                android:text="终点"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/tv_end"
+                android:padding="8dp"
+                android:layout_width="1dp"
+                android:text="内容"
+                android:gravity="center"/>
+        </TableRow>
+        <TableRow
+            android:divider="@drawable/line_h"
+            android:showDividers="beginning|middle|end">
+            <TextView
+                android:padding="8dp"
+                android:layout_width="1dp"
+                android:text="电话"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/tv_phone"
+                android:padding="8dp"
+                android:layout_width="1dp"
+                android:text="内容"
+                android:gravity="center"/>
+        </TableRow>
+        <TableRow
+            android:divider="@drawable/line_h"
+            android:showDividers="beginning|middle|end">
+            <TextView
+                android:padding="8dp"
+                android:layout_width="1dp"
+                android:text="用户名"
+                android:gravity="center"/>
+            <TextView
+                android:padding="8dp"
+                android:layout_width="1dp"
+                android:id="@+id/tv_name"
+                android:text="内容"
+                android:gravity="center"/>
+        </TableRow>
+    </TableLayout>
 <LinearLayout
     android:gravity="center"
     android:id="@+id/layout_start"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <Button
         android:text="查看流水"
         android:id="@+id/btn_recorders"
@@ -19,18 +92,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <Button
-        android:text="打开柜门"
-        android:id="@+id/btn_courier_open"
-        android:onClick="onOpenClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:text="关闭柜门"
-        android:id="@+id/btn_courier_close"
-        android:onClick="onCloseClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_marginRight="10dp"
+            android:text="打开柜门"
+            android:id="@+id/btn_courier_open"
+            android:onClick="onOpenClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_marginLeft="10dp"
+            android:text="关闭柜门"
+            android:id="@+id/btn_courier_close"
+            android:onClick="onCloseClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
     <Button
         android:text="录入费用信息"
         android:id="@+id/btn_fee"

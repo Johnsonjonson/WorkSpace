@@ -43,6 +43,11 @@ public class CourierActivity extends AppCompatActivity {
     private AlertDialog backDialog;
     private Button btnFee;
     private Button btnCourierClose;
+    private LinearLayout layoutInfo;
+    private TextView tvStart;
+    private TextView tvEnd;
+    private TextView tvName;
+    private TextView tvPhone;
 
     {
         timer = new Timer(true);
@@ -68,6 +73,11 @@ public class CourierActivity extends AppCompatActivity {
         btnArrive = findViewById(R.id.btn_arrive);
         tvTips = findViewById(R.id.tv_courier_tips);
         layoutStart = findViewById(R.id.layout_start);
+        layoutInfo = findViewById(R.id.layout_info);
+        tvStart = findViewById(R.id.tv_start);
+        tvEnd = findViewById(R.id.tv_end);
+        tvName = findViewById(R.id.tv_name);
+        tvPhone = findViewById(R.id.tv_phone);
         tvTips.setVisibility(View.INVISIBLE);
         btnCourierOpen.setEnabled(false);
 //        btnRecorders.setClickable(false);
@@ -241,6 +251,7 @@ public class CourierActivity extends AppCompatActivity {
     }
 
     private void updateView(int status) {
+        updateExpressInfo();
         btnFahuo.setVisibility(View.GONE);
         btnArrive.setVisibility(View.GONE);
         btnCourierOpen.setEnabled(false);
@@ -250,6 +261,7 @@ public class CourierActivity extends AppCompatActivity {
         switch (status){
             case 0:
             case 7: //结束
+                layoutInfo.setVisibility(View.GONE);
                 tvTips.setVisibility(View.VISIBLE);
                 tvTips.setText("暂无快递");
                 break;
@@ -286,6 +298,17 @@ public class CourierActivity extends AppCompatActivity {
                 tvTips.setText("快递已退还，等待用户取货");
                 break;
         }
+    }
+
+    private void updateExpressInfo() {
+        layoutInfo.setVisibility(View.VISIBLE);
+        if(curExpressInfo !=null){
+            tvStart.setText(curExpressInfo.getStart());
+            tvEnd.setText(curExpressInfo.getEnd());
+            tvName.setText(curExpressInfo.getName());
+            tvPhone.setText(curExpressInfo.getPhone());
+        }
+
     }
 
     private void showBackExpressDialog() {
