@@ -3,6 +3,7 @@ package com.johnson.kuaidicourier;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -69,7 +70,7 @@ public class CourierActivity extends AppCompatActivity {
         layoutStart = findViewById(R.id.layout_start);
         tvTips.setVisibility(View.INVISIBLE);
         btnCourierOpen.setEnabled(false);
-        btnRecorders.setClickable(false);
+//        btnRecorders.setClickable(false);
         layoutStart.setVisibility(View.VISIBLE);
         btnFahuo.setVisibility(View.GONE);
         btnArrive.setVisibility(View.GONE);
@@ -97,7 +98,7 @@ public class CourierActivity extends AppCompatActivity {
             public void run() {
                 requestExpressInfo();
             }
-        }, 1000, 1000);
+        }, 0, 1000);
     }
 
 
@@ -111,7 +112,8 @@ public class CourierActivity extends AppCompatActivity {
     }
 
     public void onRecordersClick(View view) {
-        openOrCloseDoor(1);
+        startActivity(new Intent(CourierActivity.this,MainActivity.class));
+//        openOrCloseDoor(1);
     }
 
     private void openOrCloseDoor(int i) {

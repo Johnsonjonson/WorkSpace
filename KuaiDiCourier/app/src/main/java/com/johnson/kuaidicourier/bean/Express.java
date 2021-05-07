@@ -5,6 +5,16 @@ public class Express {
     private String end;
     private String phone;
     private String name;
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     private int status;
     private int errorno;
     private int id;

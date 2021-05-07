@@ -65,7 +65,7 @@ class AllExpress(MethodView):
         try:
             createDB = connect()
             mycursor = createDB.cursor()
-            sql = "select * from t_express order by id desc"
+            sql = "select * from t_express where status=7  order by id desc"
             mycursor.execute(sql)
             results = mycursor.fetchall()
             for last in results:

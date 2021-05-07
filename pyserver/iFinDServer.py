@@ -21,20 +21,27 @@ def thslogin():
     else:
         print('登录成功')
 
-
 def history(date_str):
     # H30184.CSI 在 date_str 日的收盘价
-    data = THS_HQ('H30184.CSI', 'close', '', date_str, date_str)
+    result = {
+        'changeRatio': 0.0,
+        'close': 0.0
+    }
+    data = THS_HQ('H30184.CSI', 'changeRatio,close', '', date_str, date_str)
+    # data = THS_HQ('H30184.CSI', 'close', '', date_str, date_str)
     if data.errorcode != 0:
         print('error:{}'.format(data.errmsg))
-        return 0
     else:
         print(data)
         try:
             close = float(data.data.close)
+            changeRatio = float(data.data.changeRatio)
+            result['close'] = close
+            result['changeRatio'] = changeRatio
         except:
-            close = 0
-        return float(close)
+            pass
+            # close = 0
+    return result
 
 
 def latest():
@@ -49,6 +56,19 @@ def latest():
         except:
             latest = 0
         return float(latest)
+    
+def ChangeRatio():
+    data = THS_RQ('H30184.CSI', 'changeRatio')
+    if data.errorcode != 0:
+        print('error:{}'.format(data.errmsg))
+        return 0
+    else:
+        print(data)
+        try:
+            changeRatio = float(data.data.changeRatio)
+        except:
+            changeRatio = 0
+        return float(changeRatio)
 
 
 class GetLatest(MethodView):
@@ -64,7 +84,16 @@ class GetHistory(MethodView):
     def get(self):
         date_str = request.args.get("date", '')
         historyValue  = history(date_str)
-        return str(historyValue)
+        return flask.jsonify(historyValue)
+    
+    def post(self):
+        return self.get()
+
+
+class GetChangeRatio(MethodView):
+    def get(self):
+        changeRatio = ChangeRatio()
+        return str(changeRatio)
     
     def post(self):
         return self.get()
@@ -73,5 +102,6 @@ class GetHistory(MethodView):
 if __name__ == '__main__':
     app.add_url_rule('/latest', view_func=GetLatest.as_view('latest'))
     app.add_url_rule('/history', view_func=GetHistory.as_view('history'))
+    app.add_url_rule('/changeRatio', view_func=GetChangeRatio.as_view('changeRatio'))
     thslogin()
     app.run(host='0.0.0.0', port=8600)

@@ -42,5 +42,12 @@ public interface APIService {
      */
     @POST("update_status?")
     Call<String> updateStatus(@Query("id") int id,@Query("status") int status);
+
+    /**
+     * 获取所有
+     * @return
+     */
+    @POST("all?")
+    Call<String> getAllExpress();
 }
 
