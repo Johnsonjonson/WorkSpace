@@ -30,6 +30,12 @@ def history(date_str):
     data = THS_HQ('H30184.CSI', 'changeRatio,close', '', date_str, date_str)
     # data = THS_HQ('H30184.CSI', 'close', '', date_str, date_str)
     if data.errorcode != 0:
+        if data.errorcode == -1010 or data.errorcode == -1020:
+            thslogin()
+        result = {
+            'changeRatio': 'false',
+            'close': 'false'
+        }
         print('error:{}'.format(data.errmsg))
     else:
         print(data)
@@ -39,7 +45,10 @@ def history(date_str):
             result['close'] = close
             result['changeRatio'] = changeRatio
         except:
-            pass
+            result = {
+                'changeRatio':'false',
+                'close': 'false'
+            }
             # close = 0
     return result
 
@@ -47,28 +56,32 @@ def history(date_str):
 def latest():
     data = THS_RQ('H30184.CSI', 'latest')
     if data.errorcode != 0:
+        if data.errorcode == -1010 or data.errorcode == -1020:
+            thslogin()
         print('error:{}'.format(data.errmsg))
-        return 0
+        return 'false'
     else:
         print(data)
         try:
             latest = float(data.data.latest)
         except:
-            latest = 0
-        return float(latest)
+            latest = 'false'
+        return latest
     
 def ChangeRatio():
     data = THS_RQ('H30184.CSI', 'changeRatio')
     if data.errorcode != 0:
+        if data.errorcode == -1010 or data.errorcode == -1020:
+            thslogin()
         print('error:{}'.format(data.errmsg))
-        return 0
+        return 'false'
     else:
         print(data)
         try:
             changeRatio = float(data.data.changeRatio)
         except:
-            changeRatio = 0
-        return float(changeRatio)
+            changeRatio = 'false'
+        return changeRatio
 
 
 class GetLatest(MethodView):
