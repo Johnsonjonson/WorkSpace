@@ -84,26 +84,34 @@
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_marginRight="10dp"
+                android:id="@+id/btn_open"
+                android:onClick="onOpenDoor"
+                android:text="打开柜门"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/btn_open"
-            android:onClick="onOpenDoor"
-            android:text="打开柜门"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <Button
+                android:layout_marginRight="10dp"
+                android:id="@+id/btn_close"
+                android:onClick="onCloseDoor"
+                android:text="关闭柜门"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btn_submit"
+                android:onClick="onSubmitinfo"
+                android:text="提交信息"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_close"
-            android:onClick="onCloseDoor"
-            android:text="关闭柜门"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/btn_submit"
-            android:onClick="onSubmitinfo"
-            android:text="提交信息"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/btn_Receive"
             android:onClick="onReceiveExpress"

@@ -1,6 +1,9 @@
 package com.johnson.tencentmap;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -173,8 +176,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static boolean isInstalled() {
-        return new File("/data/data/com.tencent.map").exists();
+    public boolean isInstalled() {
+        boolean apkExist = checkApkExist(this, "com.tencent.map");
+
+        return new File("/data/data/com.tencent.map").exists() || apkExist;
+    }
+
+    public boolean checkApkExist(Context context, String packageName) {
+        if (packageName == null || "".equals(packageName))
+            return false;
+        try {
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName,
+                    PackageManager.GET_UNINSTALLED_PACKAGES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 
 }

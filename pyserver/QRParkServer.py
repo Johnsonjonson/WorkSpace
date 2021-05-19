@@ -167,7 +167,7 @@ class TakeCar(MethodView):
 
 class getIndex(MethodView):
     def get(self):
-        return data['index']
+        return str(data['index'])
 
 
 class getData(MethodView):

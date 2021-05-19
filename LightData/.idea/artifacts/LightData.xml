@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="LightData">
+    <output-path>$PROJECT_DIR$/out/artifacts/LightData</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="LightData" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="gson-2.8.01" />
+          <element id="library" level="project" name="poi-3.9" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="LightData/web/Web" />
+    </root>
+  </artifact>
+</component>
