@@ -59,8 +59,9 @@ class updateDatas(MethodView):
             mydb.commit()
 
         # params = request.args.get("params","")
-        light = request.args.get("light",0)
-        temp = request.args.get("temp", 0)
+        # 设备发过来的数据是反的
+        light = request.args.get("temp",0)
+        temp = request.args.get("light", 0)
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         sql = "INSERT INTO t_data (light, temp,time) VALUES (%s,%s,%s)"
         val = (light,temp,timestamp)
