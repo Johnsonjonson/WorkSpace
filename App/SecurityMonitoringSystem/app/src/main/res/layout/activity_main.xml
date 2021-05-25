@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="com.johnson.securitymonitoringsystem.MainActivity">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_height="2dip"
+            android:background="#F00" />
+        <TableRow
+            android:layout_margin="10dp">
+            <TextView
+                android:text="Camera Switch"
+                android:padding="3dip"  />
+            <TextView
+                android:layout_width="100dp" />
+            <Switch
+                android:id="@+id/camera_switch"
+                android:padding="3dip"  />
+        </TableRow>
+        <View
+            android:layout_height="2dip"
+            android:background="#F00" />
+        <TableRow
+            android:layout_margin="10dp">>
+            <TextView
+                android:text="Infra_ed:"
+                android:gravity="left"
+                android:padding="3dip" />
+            <TextView
+                android:layout_column="3"
+                android:id="@+id/infra_red"
+                android:text="有人"
+                android:padding="3dip" />
+        </TableRow>
+
+
+        <View
+        android:layout_height="2dip"
+        android:background="#F00" />
+
+        <TableRow
+            android:layout_margin="10dp">>
+            <TextView
+                android:text="Temperature:"
+                android:gravity="left"
+                android:padding="3dip" />
+            <TextView
+                android:layout_column="3"
+                android:id="@+id/tv_temp"
+                android:text="有人"
+                android:padding="3dip" />
+        </TableRow>
+
+        <View
+            android:layout_height="2dip"
+            android:background="#F00" />
+
+        <TableRow
+            android:layout_margin="10dp">>
+            <TextView
+                android:text="Fire:"
+                android:gravity="left"
+                android:padding="3dip" />
+            <TextView
+                android:layout_column="3"
+                android:id="@+id/tv_fire"
+                android:text="有毒"
+                android:padding="3dip" />
+        </TableRow>
+        <View
+            android:layout_height="2dip"
+            android:background="#F00" />
+    </TableLayout>
+
+</LinearLayout>

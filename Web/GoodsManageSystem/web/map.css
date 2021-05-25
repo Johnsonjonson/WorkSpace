@@ -1,0 +1,433 @@
+@CHARSET "UTF-8";
+#container{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+#result{
+	padding: 7px 10px;
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	width: 220px;
+	background: #fff;
+	box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+	border-radius: 7px;
+	z-index: 50;
+}
+#control_panel{
+	padding: 7px 10px;
+	position: fixed;
+	top: 10px;
+	left: 20px;
+	width: 440px;
+	height: 600px;
+	background: #fff;
+	box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+	border-radius: 7px;
+	z-index: 100;
+}
+#suggestId{
+	width:170px;
+	margin-right:10px;
+	height:25px;
+	border: 1px solid rgba(27, 142, 236, 0.5);
+	border-radius: 5px;
+	z-index: 40;
+}
+/*#searchResultPanel{*/
+/*	padding: 7px 10px;*/
+/*	position: fixed;*/
+/*	top: 40px;*/
+/*	left: 20px;*/
+/*	width: 170px;*/
+/*	height: 800px;*/
+/*	background: #fff;*/
+/*	box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);*/
+/*	border-radius: 7px;*/
+/*	z-index: 50;*/
+/*}*/
+#result button{
+	border: 1px solid rgba(27, 142, 236, 0.5);
+	border-radius: 5px;
+	background: rgba(27, 142, 236, 0.5);
+	color: #fff
+}
+ul li {
+	list-style: none;
+}
+.btn-wrap {
+	z-index: 30;
+	width: 226px;
+	position: fixed;
+	top: 180px;
+	left: 20px;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: rgba(265, 265, 265, 0.9);
+	box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+}
+.btn-wrap1 {
+	z-index: 30;
+	width: 226px;
+	position: fixed;
+	top: 120px;
+	left: 20px;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: rgba(265, 265, 265, 0.9);
+	box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+}
+.btn-wrap2 {
+	z-index: 30;
+	width: 226px;
+	position: fixed;
+	top: 60px;
+	left: 20px;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: rgba(265, 265, 265, 0.9);
+	box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+}
+.btn-wrap-control {
+	z-index: 30;
+	width: 420px;
+	position: fixed;
+	top: 30px;
+	left: 20px;
+	padding: 0px;
+	border-radius: 5px;
+	background-color: rgba(265, 265, 265, 0.9);
+}
+
+.btn {
+	width: 100px;
+	height: 30px;
+	float: left;
+	background-color: #fff;
+	color: rgba(27, 142, 236, 1);
+	font-size: 14px;
+	border:1px solid rgba(27, 142, 236, 1);
+	border-radius: 5px;
+	margin: 0 5px 6px;
+	text-align: center;
+	line-height: 30px;
+}
+.btnClose {
+	width: 100px;
+	height: 30px;
+	float: right;
+	background-color: #fff;
+	color: rgba(27, 142, 236, 1);
+	font-size: 14px;
+	border:1px solid rgba(27, 142, 236, 1);
+	border-radius: 5px;
+	margin: 0 5px 6px;
+	text-align: center;
+	line-height: 30px;
+}
+.btnClose:hover {
+	background-color: rgba(27, 142, 236, 0.8);
+	color: #fff;
+	cursor: pointer;
+}
+.btn:hover {
+	background-color: rgba(27, 142, 236, 0.8);
+	color: #fff;
+	cursor: pointer;
+}
+
+#tab{
+	width: 90%;
+	height: 90%;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+/*#tab {*/
+/*	padding: 7px 10px;*/
+/*	position: center;*/
+/*	top: 110px;*/
+/*	width: 900px;*/
+/*	height: 900px;*/
+/*	background: #fff;*/
+/*	box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);*/
+/*	border-radius: 7px;*/
+/*	overflow: hidden;*/
+/*	margin: 10px;*/
+/*}*/
+/*选项卡的头部*/
+#tab-header{
+	background-color: #F7F7F7;
+	height: 33px;
+	text-align: center;
+	position: relative;
+}
+#tab-header ul{
+	width: 500px;
+	position: absolute;
+	left: -1px;
+}
+#tab-header ul li{
+	float: left;
+	width: 98px;
+	height: 33px;
+	line-height: 33px;
+	padding: 0 1px;
+	border-bottom: 1px solid #dddddd;
+}
+#tab-header ul li.selected{
+	background-color: white;
+	font-weight: bolder;
+	border-bottom: 0;
+	border-left: 1px solid #dddddd;
+	border-right: 1px solid #dddddd;
+	padding: 0;
+
+}
+
+#tab-header ul li:hover{
+	color: orangered;
+}
+
+/*主要内容*/
+#tab-content .dom{
+	display: none;
+}
+
+li ul {
+	float: left;
+	/*background-color: red;*/
+	margin: 15px 10px;
+	width: 225px;
+	color: rgba(27, 142, 236, 1);
+}
+
+ul li a:hover{
+	color: rgba(27, 142, 236, 0.8);
+}
+
+.control_li {
+	float: left;
+	/*background-color: red;*/
+	margin: 15px 10px;
+	width: 125px;
+	bottom: 0px;
+	color: rgba(27, 142, 236, 1);
+}
+.control_li:hover{
+	color: rgba(27, 142, 236, 0.8);
+}
+#modityPwd{
+	padding: 7px 10px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	width: 300px;
+	height: 240px;
+	background: #fff;
+	box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+	border-radius: 7px;
+	z-index: 120;
+}
+h1 {
+	position: fixed;
+	margin: 0 auto;
+	width: 300px;
+	padding-top: 10px;
+	color:  rgba(27, 142, 236, 1);
+	font-size: 30px;
+}
+
+h2 {
+	margin: 0 auto;
+	width: 240px;
+	padding-top: 5px;
+	color: black;
+	font-size: 28px;
+}
+
+* {
+	margin: 0px;
+	padding: 0px;
+	font-family: '楷体';
+	font-size: medium;
+	font-weight: bold;
+}
+
+select {
+	width: 300px;
+	height: 30px;
+}
+
+.landswitch {
+	position: absolute;
+	width: 100px;
+	top: -30px;
+	margin: 0;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select: none;
+}
+
+.landswitch-checkbox {
+	display: none;
+}
+
+.landswitch-label {
+	display: block;
+	overflow: hidden;
+	cursor: pointer;
+	border: 2px solid #999999;
+	border-radius: 20px;
+}
+
+.landswitch-inner {
+	display: block;
+	width: 200%;
+	margin-left: -100%;
+	transition: margin 0.3s ease-in 0s;
+}
+
+.landswitch-inner::before, .landswitch-inner::after {
+	display: block;
+	float: right;
+	width: 50%;
+	height: 30px;
+	padding: 0;
+	line-height: 30px;
+	font-size: 14px;
+	color: white;
+	font-family:
+			Trebuchet, Arial, sans-serif;
+	font-weight: bold;
+	box-sizing: border-box;
+}
+
+.landswitch-inner::after {
+	content: attr(data-on);
+	padding-left: 10px;
+	background-color: rgba(27, 142, 236, 1);
+	color: #FFFFFF;
+}
+
+.landswitch-inner::before {
+	content: attr(data-off);
+	padding-right: 10px;
+	background-color: #EEEEEE;
+	color: #999999;
+	text-align: right;
+}
+
+.landswitch-switch {
+	position: absolute;
+	display: block;
+	width: 22px;
+	height: 22px;
+	margin: 4px;
+	background: #FFFFFF;
+	top: 0;
+	bottom: 0;
+	right: 56px;
+	border: 2px solid #999999;
+	border-radius: 20px;
+	transition: all 0.3s ease-in 0s;
+}
+
+.landswitch-checkbox:checked + .landswitch-label .landswitch-inner {
+	margin-left: 0px;
+}
+
+.landswitch-checkbox:checked + .landswitch-label .landswitch-switch {
+	right: 0px;
+}
+
+#quit {
+	float: right;
+	padding-top: 5px;
+	padding-right: 10px;
+}
+
+#menu {
+	position: absolute;
+	bottom: 5px;
+}
+
+#menu li {
+	float: left;
+	margin-left: 10px;
+	list-style: none;
+}
+
+#header h1 {
+	margin: 0 auto;
+	width: 240px;
+	padding-top: 40px;
+	color: yellow;
+	font-size: 36px;
+	text-align:center
+}
+
+#modityPwd table {
+	width: 300px;
+	margin: 0 auto;
+	font-size: 24px;
+}
+
+#modityPwd table.wide {
+	width: 400px;
+	margin: 0 auto;
+}
+
+#modityPwd table.wide td {
+	vertical-align: middle;
+	width: auto;
+}
+
+#modityPwd thead td {
+	text-align: center;
+}
+
+#modityPwd td {
+	margin: 0 auto;
+}
+
+#modityPwd input {
+	height: 20px;
+	width: 150px;
+}
+
+#modityPwd .cols2 ,#modityPwd .cols4{
+	text-align: center;
+}
+
+#modityPwd .cols2 input {
+	width: auto;
+	height: 30px;
+	padding: 2px;
+	margin-right: 10px;
+}
+
+#modityPwd .result {
+	z-index: 40;
+	background: white;
+	text-align: center;
+}
+
+#modityPwd .result a {
+	color: blue;
+}
+
+#modityPwd .info {
+	color: red;
+	margin: 0 auto;
+}
+
+#main{
+	text-align:center;
+}

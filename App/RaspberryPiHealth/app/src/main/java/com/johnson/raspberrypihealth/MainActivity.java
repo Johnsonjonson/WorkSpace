@@ -2,8 +2,13 @@ package com.johnson.raspberrypihealth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.johnson.raspberrypihealth.bean.HealthData;
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvTemperature;
 
     private Timer timer;
+    private boolean isShowAlert;
 
     {
         timer = new Timer(true);
@@ -85,14 +91,118 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+
+                Toast.makeText(MainActivity.this, "request fail", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+
+
+
+
+
             }
         });
     }
 
+    private double maxBlood = 140;
+    private double minBlood = 90;
+    private double maxTemp = 37;
+    private double minTemp = 36;
+    private double maxHeart= 100;
+    private double minHeart= 60;
+
     private void updateHealthInfo(HealthData healthDataInfo) {
-        tvHeartRate.setText("Heart Rate："+healthDataInfo.getHeart());
-        tvBloodPressure.setText("Blood Pressure：" +healthDataInfo.getBlood());
-        tvTemperature.setText("Temperature：" + healthDataInfo.getTemp());
+        double blood = healthDataInfo.getBlood();
+        double heart = healthDataInfo.getHeart();
+        double temp = healthDataInfo.getTemp();
+        tvHeartRate.setText("Heart Rate："+heart);
+        tvBloodPressure.setText("Blood Pressure：" +blood);
+        tvTemperature.setText("Temperature：" + temp);
+        if(isShowAlert){
+            return;
+        }
+//        if (blood > maxBlood){
+//            showAlertDialog("血压偏高");
+//            return;
+//        }
+//
+//        if(blood<minBlood){
+//            showAlertDialog("血压偏低");
+//            return;
+//        }
+//
+//        if (heart > maxHeart){
+//            showAlertDialog("心率偏高");
+//            return;
+//        }
+//
+//        if( heart<minHeart){
+//            showAlertDialog("心率偏低");
+//            return;
+//        }
+        if (temp > maxTemp){
+            showAlertDialog("High Temperature");
+            return;
+        }
+//        if(temp<minTemp){
+//            showAlertDialog("体温偏低");
+//            return;
+//        }
+    }
+
+    private void showAlertDialog(String msg){
+//        isShowAlert = true;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // 获取布局
+        builder.setMessage(msg);
+        builder.setTitle("Warning⚠️");
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setCancelable(true);
+
+        builder.setNeutralButton("Don't prompt again", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton("got it", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                isShowAlert = false;
+            }
+        });
+
+//        builder.setNegativeButton("不再提示", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+        AlertDialog dialog = builder.create();
+
+//        AlertDialog dialog = builder.create();      //创建AlertDialog对象
+        //对话框显示的监听事件
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+//                Log.e(TAG, "对话框显示了");
+                isShowAlert = true;
+            }
+        });
+        //对话框消失的监听事件
+//        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//            @Override
+//            public void onCancel(DialogInterface dialog) {
+////                Log.e(TAG, "对话框消失了");
+//                isShowAlert = false;
+//            }
+//        });
+        dialog.show();
     }
 
 }

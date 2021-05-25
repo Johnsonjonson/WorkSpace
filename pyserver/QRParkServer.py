@@ -167,7 +167,35 @@ class TakeCar(MethodView):
 
 class getIndex(MethodView):
     def get(self):
-        return str(data['index'])
+        try:
+            queryDB = connect()
+            cursor = queryDB.cursor()
+            # SQL 查询语句
+            sql = "SELECT * FROM t_park"
+            # print(sql)
+            # result = []
+
+            # 执行SQL语句
+            cursor.execute(sql)
+            # 获取所有记录列表
+            results = cursor.fetchall()
+            result = ""
+            for row in results:
+                temp = {}
+                id = int(row[0])
+                status = int(row[1])
+                if id == 10:
+                    result = result+str(status)
+                else:
+                    result = result + str(status) + ","
+        except Exception as e:
+            print('报错：', str(e))
+            result = "0,0,0,0,0,0,0,0,0,0"
+        queryDB.close()
+        return str(result)
+
+    def post(self):
+        return self.get()
 
 
 class getData(MethodView):

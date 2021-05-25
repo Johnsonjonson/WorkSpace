@@ -38,7 +38,7 @@ class updateDatas(MethodView):
     def get(self):
         global status
         global temperature
-        global mydb
+        mydb = connect()
         sql = "select * from t_data ORDER BY time DESC"
         mycursor = mydb.cursor()
         mycursor.execute(sql)
@@ -66,6 +66,7 @@ class updateDatas(MethodView):
         val = (light,temp,timestamp)
         print("数据库连接sucessfully! " + str(mydb.is_connected()))
         add(mydb, sql, val)
+        mydb.close()
         return str(switchStatus)
 
 class updateSwitch(MethodView):
@@ -79,7 +80,5 @@ class updateSwitch(MethodView):
 if __name__ == '__main__':
     app.add_url_rule('/update', view_func=updateDatas.as_view('update'))
     app.add_url_rule('/switch', view_func=updateSwitch.as_view('switch'))
-    global mydb
-    mydb = connect()
     app.run(host='0.0.0.0', port=8551)
 
