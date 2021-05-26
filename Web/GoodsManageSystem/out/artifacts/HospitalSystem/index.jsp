@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html"
-		 pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -9,42 +9,137 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<base href="<%=basePath%>">
-	<link rel="stylesheet" href="styles.css">
-	<title>首页</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<base href="<%=basePath%>">
+<link rel="stylesheet" href="map.css">
+	<style>
+		body,
+		html,
+		#container{
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+			overflow: hidden;
+		}
+		#header {
+			position: relative;
+			height: 140px;
+			/*background-color: #FF0000;*/
+			/*opacity: 35%;*/
+			background:url("img/head.jpg")
+		}
+		#header h1 {
+			align-self: center;
+			margin: 0 auto;
+			width: 240px;
+			padding-top: 40px;
+			color: white;
+			font-size: 36px;
+			text-align:center
+		}
+		#quit {
+			float: right;
+			padding-top: 5px;
+			padding-right: 10px;
+		}
+
+		#menu {
+			position: absolute;
+			bottom: 5px;
+		}
+
+		#menu li {
+			float: left;
+			margin-left: 10px;
+			list-style: none;
+		}
+		/*h1 {*/
+		/*	margin: 0 auto;*/
+		/*	width: 300px;*/
+		/*	padding-top: 10px;*/
+		/*	color:  rgba(27, 142, 236, 1);*/
+		/*	font-size: 30px;*/
+		/*}*/
+
+		/*h2 {*/
+		/*	margin: 0 auto;*/
+		/*	width: 240px;*/
+		/*	padding-top: 5px;*/
+		/*	color: black;*/
+		/*	font-size: 28px;*/
+		/*}*/
+	</style>
+<title>快速入库</title>
 </head>
 <body>
-<div id="container">
-	<div id="header">
-		<h1>商品管理系统</h1>
+	<div id="container" align="center">
+		<div id="header">
+
+			<a id="quit" href="QuitServlet">退出</a>
+			<h1>商品管理系统</h1>
+		</div>
+		<div id="content">
+			<!--选项的头部-->
+			<div id="tab-header">
+				<ul>
+					<li class="selected" onclick = "tabClick(0)">快速入库</li>
+					<li onclick = "tabClick(1)">交易处理</li>
+					<li onclick = "tabClick(2)">超市管理</li>
+				</ul>
+			</div>
+			<!--主要内容-->
+
+			<div id="tab-content">
+<%--				<div class="dom" id="dom" style="display: block;position: absolute;width: 400px;top:80px;left: 20px;margin: 0;">--%>
+				<div class="dom" style="display: block;">
+					<ul>
+						<li>
+							<a  href="#" style="align-self: center">请刷卡，快速录入商品</a>
+						</li>
+					</ul>
+
+				</div>
+				<div class="dom">
+					<ul>
+						<li>
+							<a href="#" style="align-self: center">暂无内容，敬请期待</a>
+						</li>
+					</ul>
+				</div>
+				<div class="dom">
+					<ul>
+						<li>
+							<a href="#" style="align-self: center">暂无内容，敬请期待</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+<%--		<div id="content">--%>
+<%--			快速入库--%>
+<%--		</div>--%>
+		<div id="footer"></div>
 	</div>
-	<div id="content">
-		<form action="LoginServlet" method="post">
-			<table style="width:400px;height:200px;">
-				<tr>
-					<td>用户名</td>
-					<td><input type="text" name="name"/></td>
-				</tr>
-				<tr>
-					<td>密码</td>
-					<td><input type="password" name="pwd"/></td>
-				</tr>
-				<tr class="cols2">
-					<td colspan="2">
-						<input type="submit" value="登录" />
-						<input type="reset" value="重置" />
-						<input type="button" value="注册"
-							   onclick="javascript:window.parent.location.href='${pageContext.request.contextPath }/register.jsp'"/>
-					</td>
-				</tr>
-				<tr class="cols2">
-					<td colspan="2" class="info"><%=request.getAttribute("msg")==null?"":request.getAttribute("msg") %></td>
-				</tr>
-			</table>
-		</form>
-	</div>
-	<div id="footer"></div>
-</div>
+
+	<script type="text/javascript">
+		function G(id) {
+			return document.getElementById(id);
+		}
+		function tabClick(index){
+			// 拿到所有的标题(li标签) 和 标题对应的内容(div)
+			var titles = G('tab-header').getElementsByTagName('li');
+			var divs = G('tab-content').getElementsByClassName('dom');
+			// 判断
+			if(titles.length != divs.length) return;
+			// 遍历
+			for(var j=0; j<titles.length; j++){
+				titles[j].className = '';
+				divs[j].style.display = 'none';
+			}
+			titles[index].className = 'selected';
+			divs[index].style.display = 'block';
+		}
+	</script>
 </body>
 </html>

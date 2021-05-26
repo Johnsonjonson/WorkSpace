@@ -235,22 +235,6 @@ ul li a:hover{
 	border-radius: 7px;
 	z-index: 120;
 }
-h1 {
-	position: fixed;
-	margin: 0 auto;
-	width: 300px;
-	padding-top: 10px;
-	color:  rgba(27, 142, 236, 1);
-	font-size: 30px;
-}
-
-h2 {
-	margin: 0 auto;
-	width: 240px;
-	padding-top: 5px;
-	color: black;
-	font-size: 28px;
-}
 
 * {
 	margin: 0px;
