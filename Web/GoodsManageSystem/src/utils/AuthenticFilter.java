@@ -24,10 +24,6 @@ public class AuthenticFilter implements Filter {
 //		adminAuths.add("/visitadd.jsp");
 //		adminAuths.add("/vetsearch_result.jsp");
 //		adminAuths.add("/vetsearch.jsp");
-//		adminAuths.add("/vetedit.jsp");
-//		adminAuths.add("/customersearch.jsp");
-//		adminAuths.add("/customersearch_result.jsp");
-//		adminAuths.add("/customerdetail.jsp");
 //		adminAuths.add("/warehousing.jsp");
 	}
 
@@ -47,8 +43,6 @@ public class AuthenticFilter implements Filter {
 				request.setAttribute("msg", "请先登录");
 				request.getRequestDispatcher("/index.jsp").forward(httpreq,
 						response);
-			} else if (user.getRole().equals("admin")) {
-				chain.doFilter(request, response);
 			} else {
 				request.setAttribute("msg", "该页面只有管理员能够访问");
 				request.getRequestDispatcher("/index.jsp").forward(httpreq,

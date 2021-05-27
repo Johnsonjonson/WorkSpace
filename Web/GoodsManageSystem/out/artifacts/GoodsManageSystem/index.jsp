@@ -70,6 +70,8 @@
 		/*	color: black;*/
 		/*	font-size: 28px;*/
 		/*}*/
+		table,table tr th, table tr td { border:1px solid #0094ff; }
+		table { width: 400px; min-height: 25px; line-height: 25px; text-align: center; border-collapse: collapse;margin: 40px;}
 	</style>
 	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 <title>快速入库</title>
@@ -99,6 +101,7 @@
 						<li>
 							<a  href="#" style="align-self: center">请刷卡，快速录入商品</a>
 							<table class="sui-table table-bordered" id="stable">
+							</table>
 						</li>
 					</ul>
 
@@ -193,74 +196,21 @@
 			});
 		},1000)
 		var source_data = [
-			['农、林、牧、渔业','10','1000','2000','0.12','201507'],
-			['工业','17','1000','2000','0.13','201507'],
-			['建筑业','72','1000','2000','0.14','201507'],
-			['农、林、牧、渔业','10','1000','2000','0.22','201508'],
-			['工业','17','1000','2000','0.23','201508'],
-			['建筑业','72','1000','2000','0.24','201508'],
-			['农、林、牧、渔业','10','1000','2000','0.32','201509'],
-			['工业','17','1000','2000','0.33','201509'],
-			['建筑业','72','1000','2000','0.34','201509'],
+			['1001','篮球','150','1'],
+			['1002','足球','120','1'],
+			['1003','棒球','50','1'],
 		];
 		function creat_table(id,source_data){
-			//重组数据
-			var columns = []; //存储列名
-			var rownames = []; //存储第一列数据
-			var rows = []; //存储行数据
-
-			var sLength = source_data.length;
-			for(var i=0; i<sLength; i++){
-				var rLength = source_data[i].length;
-				if(columns.indexOf(source_data[i][rLength-1])<0){ //不存在
-					columns.push(source_data[i][rLength-1]);
-				}
-
-				if(rownames.indexOf(source_data[i][0])<0){ //不存在
-					rownames.push(source_data[i][0]);
-					var rowdata = [source_data[i]];
-					rows.push(rowdata);
-				}else{
-					var index = rownames.indexOf(source_data[i][0]);
-					rows[index].push(source_data[i]);
-				}
-			}
 			//画表格
-			var tempStr = '';
-			for(var i=0; i<rows.length; i++){
-				if(i==0){
-					tempStr += '<thead>';
-					var tr1 = '<tr><th>行业/月</th>';
-					var tr2 = '<tr><th>排名</th>';
-					for(var j=0; j<columns.length; j++){
-						tr1 += '<th colspan="3">' + columns[j] + '</th>';
-						tr2 += '<th>电量</th><th>同期</th><th>同比</th>';
-					}
-					tr1 += '</tr>';
-					tr2 += '</tr>';
-					tempStr += tr1+tr2+'</thead>';
-
-					tempStr += '<tbody>';
-					tempStr += '<tr>';
-					tempStr += '<td>'+rownames[i]+'</td>';
-					for(var k=0; k<rows[i].length; k++){
-						for(var l=2; l<rows[i][k].length-1; l++){
-							tempStr += '<td>' +rows[i][k][l]+'</td>';
-						}
-					}
-					tempStr += '</tr>';
-				}else{
-					tempStr += '<tr>';
-					tempStr += '<td>'+rownames[i]+'</td>';
-					for(var k=0; k<rows[i].length; k++){
-						for(var l=2; l<rows[i][k].length-1; l++){
-							tempStr += '<td>' +rows[i][k][l]+'</td>';
-						}
-					}
-					tempStr += '</tr>';
+			var tempStr = '<thead><tr><td>id</td><td>名称</td><td>价格</td><td>数量</td></thead>';
+			for(var i=0; i<source_data.length; i++){
+				var row = source_data[i]
+				tempStr += '<tr>';
+				for(var k=0; k<row.length; k++){
+					tempStr += '<td>' +row[k]+'</td>';
 				}
+				tempStr += '</tr>';
 			}
-			tempStr+='</tbody>'
 			$("#"+id).html(tempStr);
 		}
 

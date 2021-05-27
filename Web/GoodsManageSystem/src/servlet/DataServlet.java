@@ -1,6 +1,9 @@
 package servlet;
 
+import com.google.gson.Gson;
+import dao.DataDAO;
 import dao.UserDAO;
+import entity.Product;
 import entity.User;
 
 import javax.servlet.ServletException;
@@ -12,12 +15,12 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/UserServlet")
-public class UserServlet extends HttpServlet {
+public class DataServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		String m = request.getParameter("m");
-		if("delete".equals(m)){
+		if("update".equals(m)){
 			delete(request, response);
 		}else{
 			search(request,response);
@@ -47,24 +50,19 @@ public class UserServlet extends HttpServlet {
 	private void search(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			UserDAO userDAO = new UserDAO();
-			List<User> users = userDAO.searchAllUser();
-			if (users.size() == 0) {
-				request.setAttribute("msg", "没有找到相关用户信息");
-				request.setAttribute("users", users);
-				request.getRequestDispatcher("/userSearchResult.jsp").forward(
-						request, response);
-			}else{
-				request.setAttribute("users", users);
-				request.getRequestDispatcher("/userSearchResult.jsp").forward(
-						request, response);
-			}
+			DataDAO dataDAO = new DataDAO();
+			List<Product> products = dataDAO.searchAllGoods();
+			Gson gson2 = new Gson();
+			String json = gson2.toJson(products);
+			System.out.println(json);
+			// 将json字符串数据返回给前端
+			response.setContentType("text/html; charset=utf-8");
+			response.getWriter().write(json);
 			
 		} catch (Exception e) {
 //			request.setAttribute("users", users);
-			request.setAttribute("msg", e.getMessage());
-			request.getRequestDispatcher("/userSearchResult.jsp").forward(
-					request, response);
+			response.setContentType("text/html; charset=utf-8");
+			response.getWriter().write("{}");
 		}
 
 	}

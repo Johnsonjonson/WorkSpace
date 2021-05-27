@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="entity.User" %>
-<%@ page import="entity.UserData" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page language="java" contentType="text/html"
          pageEncoding="UTF-8"%>
@@ -38,7 +37,6 @@
             <h1>商品管理系统</h1>
             <h3 style="font-size:28px;margin: 0 auto;height:30px;text-align:center;color:white;align-self: center;alignment: center">病人详情</h3>
             <ul id="menu">
-                <li><a href="customersearch.jsp" id = "customer_m">超市管理</a></li>
             </ul>
         </div>
         <div id="content">
