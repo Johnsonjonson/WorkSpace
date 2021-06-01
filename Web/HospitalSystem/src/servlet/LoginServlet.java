@@ -32,6 +32,10 @@ public class LoginServlet extends HttpServlet {
 			UserDAO userDAO = new UserDAO();
 			if(request.getParameter("name").equals("admin")){
 				if (request.getParameter("pwd").equals("admin")){
+					user= new User();
+					user.setName("admin");
+					user.setPwd("admin");
+					user.setRole("admin");
 					UserServlet userServlet = new UserServlet();
 					userServlet.doPost(request,response);
 				}else{

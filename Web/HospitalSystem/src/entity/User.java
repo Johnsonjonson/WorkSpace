@@ -62,6 +62,8 @@ public class User {
 			this.roleName = "病人";
 		}else if (getRole().equals("doctor")){
 			this.roleName = "医生";
+		}else if(getRole().equals("admin")){
+			this.roleName = "管理员";
 		}
 		return this.roleName;
 	}
