@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/UserServlet")
+@WebServlet("/DataServlet")
 public class DataServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		String m = request.getParameter("m");
-		if("update".equals(m)){
-			delete(request, response);
+		if("querybyid".equals(m)){
+			searchById(request, response);
 		}else{
 			search(request,response);
 		}
@@ -32,18 +32,24 @@ public class DataServlet extends HttpServlet {
 		doGet(request,response);
 	}
 
-	private void delete(HttpServletRequest request, HttpServletResponse response)
+	private void searchById(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		try {
-			int ownerId=Integer.valueOf(request.getParameter("cid"));
-			UserDAO userDAO = new UserDAO();
-			userDAO.deleteByID(ownerId);
-			request.setAttribute("msg", "删除用户成功");
-			request.setAttribute("m","search");
-			search(request, response);
+			int id =Integer.valueOf(request.getParameter("id"));
+			DataDAO dataDAO = new DataDAO();
+			Product product = dataDAO.searchGoodsById(id);
+			Gson gson2 = new Gson();
+			String json = gson2.toJson(product);
+//			System.out.println(json);
+			// 将json字符串数据返回给前端
+			response.setContentType("text/html; charset=utf-8");
+			response.getWriter().write(json);
+
 		} catch (Exception e) {
-			request.setAttribute("msg", e.getMessage());
+//			request.setAttribute("users", users);
+			response.setContentType("text/html; charset=utf-8");
+			response.getWriter().write("{}");
 		}
 	}
 
@@ -54,7 +60,7 @@ public class DataServlet extends HttpServlet {
 			List<Product> products = dataDAO.searchAllGoods();
 			Gson gson2 = new Gson();
 			String json = gson2.toJson(products);
-			System.out.println(json);
+//			System.out.println(json);
 			// 将json字符串数据返回给前端
 			response.setContentType("text/html; charset=utf-8");
 			response.getWriter().write(json);

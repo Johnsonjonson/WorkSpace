@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
 				msg = "密码错误";
 			} else {
 				request.getSession(true).setAttribute("user", user);
-				url = "/warehousing.jsp";
+				url = "/main.jsp";
 				msg = "登录成功";
 			}
 		} catch (Exception e) {

@@ -26,7 +26,7 @@
 <div id="container">
     <div id="header">
 
-        <h1>商品管理系统</h1>
+        <h1>超市管理系统</h1>
     </div>
     <div id="content">
         <form action="RegisterServlet" method="post">

@@ -6,7 +6,9 @@ import math
 import json
 import mysql.connector
 import datetime
-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 app = flask.Flask(__name__)
 global mydb
 global goodsId
@@ -109,7 +111,8 @@ class SendRequest(MethodView):
         elif int(status) == 2: # 购买商品
             num = int(CheckIsExitGoods(id))
             if num > 0:
-                UpdateGood(id, name, price, num - 1)
+                pass
+                # UpdateGood(id, name, price, num - 1)
 
         return "200"
     def post(self):
@@ -143,7 +146,7 @@ class updateStatus(MethodView):
             createDB.close()
         else:
             pass
-        result = "callback("+str(goodsData)+")"
+        result = "callback("+json.dumps(goodsData)+")"
         print(result)
         return result
     def post(self):
@@ -152,6 +155,7 @@ class updateStatus(MethodView):
 
 
 if __name__ == '__main__':
+    app.config['JSON_AS_ASCII'] = False
     app.add_url_rule('/api', view_func=SendRequest.as_view('api'))
     app.add_url_rule('/status', view_func=updateStatus.as_view('status'))
     app.run(host='0.0.0.0', port=8555)

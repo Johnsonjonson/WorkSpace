@@ -167,6 +167,9 @@
                     zhendongdata.innerText = result.d
                     time.innerText = result.time
                     useTime.innerText = timeDif
+                    if (result.d > 60){
+                        alert("警告!\r\n震动数据过高，大于60")
+                    }
                 },
                 error: function (errorMsg) {
                     alert("请求数据失败!");
