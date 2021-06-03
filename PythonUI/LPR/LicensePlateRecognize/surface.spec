@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['surface.py'],
-             pathex=['E:\\Workspace\\LPR\\LicensePlateRecognize'],
+             pathex=['E:\\Workspace\\PythonUI\\LPR\\LicensePlateRecognize'],
              binaries=[],
              datas=[],
              hiddenimports=[],

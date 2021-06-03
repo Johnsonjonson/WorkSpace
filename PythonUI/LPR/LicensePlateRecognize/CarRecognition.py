@@ -9,7 +9,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 def recognize(file):
     # client_id 为官网获取的AK， client_secret 为官网获取的SK
-    host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=BpPop19vratBxVSf4t9hm1yT&client_secret=AT1SC5VwFkAKcmM02YDM7ZAL2GkQgjaO'
+    host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=nIIs71CpUeHQKKlz46qADv9j&client_secret=zireOdxfhcAZ3jQjpZrcWuxsyOQKKaZy'
     response = requests.get(host)
     if response:
         print(response.json()['refresh_token'])
