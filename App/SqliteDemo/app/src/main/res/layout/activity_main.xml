@@ -15,8 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
+        android:digits="男女"
         android:id="@+id/et_sex"
-        android:hint="请输入性别"
+        android:hint="请输入性别（男/女）"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText

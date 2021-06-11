@@ -3,6 +3,7 @@ package com.johnson.sqlitedemo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         etAge = findViewById(R.id.et_age);
         etSex = findViewById(R.id.et_sex);
         etWeight = findViewById(R.id.et_weight);
+        etSex.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
     }
 
     public void onConfirmClick(View view) {
