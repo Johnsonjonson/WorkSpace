@@ -30,7 +30,7 @@ def history(date_str):
     data = THS_HQ('H30184.CSI', 'changeRatio,close', '', date_str, date_str)
     # data = THS_HQ('H30184.CSI', 'close', '', date_str, date_str)
     if data.errorcode != 0:
-        if data.errorcode == -1010 or data.errorcode == -1020:
+        if data.errorcode == -1010 or data.errorcode == -1020 or data.errorcode == -1030  or data.errorcode == -1040:
             thslogin()
         result = {
             'changeRatio': 'false',
@@ -56,7 +56,7 @@ def history(date_str):
 def latest():
     data = THS_RQ('H30184.CSI', 'latest')
     if data.errorcode != 0:
-        if data.errorcode == -1010 or data.errorcode == -1020:
+        if data.errorcode == -1010 or data.errorcode == -1020 or data.errorcode == -1030  or data.errorcode == -1040:
             thslogin()
         print('error:{}'.format(data.errmsg))
         return 'false'
@@ -71,7 +71,7 @@ def latest():
 def ChangeRatio():
     data = THS_RQ('H30184.CSI', 'changeRatio')
     if data.errorcode != 0:
-        if data.errorcode == -1010 or data.errorcode == -1020:
+        if data.errorcode == -1010 or data.errorcode == -1020  or data.errorcode == -1030  or data.errorcode == -1040:
             thslogin()
         print('error:{}'.format(data.errmsg))
         return 'false'
