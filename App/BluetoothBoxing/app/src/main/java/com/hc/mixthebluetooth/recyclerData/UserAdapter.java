@@ -56,14 +56,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.RecyclerViewHo
             });
         }
 
-        holder.deleteImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mNumberList.remove(position);
-                //通知刷新 
-                notifyItemRemoved(position);
-            }
-        });
+//        holder.deleteImageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mNumberList.remove(position);
+//                //通知刷新
+//                notifyItemRemoved(position);
+//            }
+//        });
     }
 
     @Override
@@ -78,7 +78,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.RecyclerViewHo
         public RecyclerViewHolder(View itemView) {
             super(itemView);
             numberTextView = (TextView) itemView.findViewById(R.id.number_item);
-            deleteImageButton = (ImageButton) itemView.findViewById(R.id.number_item_delete);
+//            deleteImageButton = (ImageButton) itemView.findViewById(R.id.number_item_delete);
         }
     }
 }

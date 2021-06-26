@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/login_layout"
     tools:context=".activity.LoginActivity">
     <LinearLayout
         android:layout_margin="20dp"
@@ -17,12 +18,13 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:textSize="20dp"
             android:id="@+id/user_name"
             android:layout_margin="10dp"
             android:gravity="center"
             android:layout_weight="1"
             android:maxLines="1"
-            android:text="User AUser AUser AUser AUser AUser AUser A"
+            android:text="选择用户"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <ImageView
@@ -37,8 +39,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:text="创建用户"
         android:onClick="onBtnCreateClick"
         android:id="@+id/btn_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:text="Enter"
+        android:onClick="onBtnEnterClick"
+        android:id="@+id/btn_enter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

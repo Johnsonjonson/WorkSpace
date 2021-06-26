@@ -128,10 +128,6 @@ public class FragmentMessage extends BasFragment {
                     module = (DeviceModule) o;
                 }
                 if (data != null) {
-//                    mDataList.add(new FragmentMessageItem(Analysis.getByteToString(data,isReadHex), isShowTime?Analysis.getTime():null, false, module,isShowMyData));
-//                    mAdapter.notifyDataSetChanged();
-//                    mRecyclerView.smoothScrollToPosition(mDataList.size());
-//                    mReadNumberTV.setText(String.valueOf(Integer.parseInt(mReadNumberTV.getText().toString())+Analysis.lengthArray(data)));
                     byte id = data[0];
                     byte xueyang = data[1];
                     String ids = String.valueOf(id);
@@ -201,21 +197,13 @@ public class FragmentMessage extends BasFragment {
                 mCheckLoopSend.toggle();
                 break;
             case R.id.send_a:
-//                toast("A按钮被点击");
-//                setSendData();
                 sendData("a");
                 break;
             case R.id.send_b:
-//                toast("B 按钮被点击");
                 sendData("b");
-//                if (mSendBt.getText().toString().equals("发送"))
-//                    mDataET.setText("");
-//                else
-//                    toast("连续发送中，不能清除发送区的数据");
                 break;
             case R.id.send_c:
                 sendData("c");
-//                toast("c按钮被点击");
                 break;
 
         }
