@@ -1,0 +1,3 @@
+﻿  main.cpp
+g:\workspace\opengl\project\project1\project1\main.cpp(211): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+  Project1.vcxproj -> G:\Workspace\openGL\Project\Project1\x64\Debug\Project1.exe

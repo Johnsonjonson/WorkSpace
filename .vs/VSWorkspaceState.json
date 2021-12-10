@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\openGL",
+    "\\openGL\\Libraries",
+    "\\openGL\\Libraries\\include",
+    "\\openGL\\Libraries\\include\\glad",
+    "\\openGL\\Libraries\\include\\GLFW",
+    "\\openGL\\Project",
+    "\\openGL\\Project\\Project1",
+    "\\openGL\\Project\\Project1\\Project1"
+  ],
+  "SelectedNode": "\\openGL\\Project\\Project1\\Project1\\main.cpp",
+  "PreviewInSolutionExplorer": false
+}
