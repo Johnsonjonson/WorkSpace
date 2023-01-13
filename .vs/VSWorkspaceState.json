@@ -8,8 +8,9 @@
     "\\openGL\\Libraries\\include\\GLFW",
     "\\openGL\\Project",
     "\\openGL\\Project\\Project1",
-    "\\openGL\\Project\\Project1\\Project1"
+    "\\openGL\\Project\\Project2",
+    "\\openGL\\Project\\Project2\\Project2"
   ],
-  "SelectedNode": "\\openGL\\Project\\Project1\\Project1\\main.cpp",
+  "SelectedNode": "\\openGL\\Project\\Project2\\Project2\\light_demo.cpp",
   "PreviewInSolutionExplorer": false
 }

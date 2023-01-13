@@ -1,2 +1,12 @@
-﻿  main.cpp
+﻿  light_demo.cpp
+g:\workspace\opengl\project\project2\project2\shader_s.h(4): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+g:\workspace\opengl\project\project2\project2\shader_s.h(42): warning C4101: “e”: 未引用的局部变量
+g:\workspace\opengl\project\project2\project2\light_demo.cpp(159): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+g:\workspace\opengl\project\project2\project2\light_demo.cpp(256): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+g:\workspace\opengl\project\project2\project2\light_demo.cpp(257): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+g:\workspace\opengl\project\project2\project2\light_demo.cpp(261): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+g:\workspace\opengl\project\project2\project2\light_demo.cpp(262): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+g:\workspace\opengl\project\project2\project2\light_demo.cpp(264): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+g:\workspace\opengl\project\project2\project2\light_demo.cpp(265): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+g:\workspace\opengl\project\project2\project2\light_demo.cpp(274): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
   Project2.vcxproj -> G:\Workspace\openGL\Project\Project2\x64\Debug\Project2.exe

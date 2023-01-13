@@ -1,0 +1,37 @@
+// Learn TypeScript:
+//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/typescript.html
+// Learn Attribute:
+//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/reference/attributes.html
+// Learn life-cycle callbacks:
+//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
+
+const {ccclass, property} = cc._decorator;
+
+@ccclass
+export default class NewClass extends cc.Component {
+
+    @property(cc.Label)
+    label: cc.Label = null;
+
+    @property
+    text: string = 'hello';
+
+    // LIFE-CYCLE CALLBACKS:
+
+    // 当脚本被激活  第一个被调用 初始化调用
+    onLoad () {}
+
+    //初始化调用
+    start () {}
+    
+    // 每帧调用
+    update (dt) {}
+
+    lateUpdate(){}
+
+    onDestroy(){}
+
+    onDisable(){}
+
+    onEnable(){}
+}
