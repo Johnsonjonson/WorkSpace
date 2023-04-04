@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private double maxTemp = 37;
+//    private double maxTemp = 37;
 
     private void updateHealthInfo(ChargeData chargeDataInfo) {
         double voltage = chargeDataInfo.getVoltage();
@@ -109,13 +109,13 @@ public class MainActivity extends AppCompatActivity {
         tvTemperature.setText("Temperature：" + temp +"℃");
         tvChargeStatus.setText(status == 1?"正在充电...":"未充电");
         tvChargeStatus.setTextColor(status == 1? Color.BLUE :Color.RED);
-        if(isShowAlert){
-            return;
-        }
-        if (temp > maxTemp){
-            showAlertDialog("High Temperature");
-            return;
-        }
+//        if(isShowAlert){
+//            return;
+//        }
+//        if (temp > maxTemp){
+//            showAlertDialog("High Temperature");
+//            return;
+//        }
     }
 
     private void showAlertDialog(String msg){
